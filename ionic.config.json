@@ -1,0 +1,7 @@
+{
+  "name": "pragma-todo-app",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular-standalone"
+}
