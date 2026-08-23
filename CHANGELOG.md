@@ -9,6 +9,6 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ### Added
 
-- Proyecto base Ionic + Angular con plantilla `blank` e integración Cordova.
+- Proyecto base Ionic + Angular 21 con plantilla `blank` e integración Cordova.
 
 [Unreleased]: https://github.com/sneydermc3007/pragma-todo-app/commits/main
