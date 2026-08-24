@@ -7,6 +7,12 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-08-24
+
+### Fixed
+
+- Los iconos de la interfaz ya no quedan en blanco: se registran al arrancar en lugar de intentar descargarse.
+
 ## [0.2.0] - 2026-08-24
 
 ### Added
