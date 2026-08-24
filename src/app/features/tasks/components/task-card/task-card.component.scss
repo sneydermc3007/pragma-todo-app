@@ -1,0 +1,97 @@
+.card {
+  --tone: var(--ion-color-primary);
+  --tone-soft: rgba(var(--ion-color-primary-rgb), 0.1);
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px;
+  border-radius: 20px;
+  transition: opacity 0.2s ease;
+
+  &.high {
+    --tone: var(--ion-color-danger);
+    --tone-soft: rgba(var(--ion-color-danger-rgb), 0.12);
+  }
+
+  &.medium {
+    --tone: var(--ion-color-warning-shade);
+    --tone-soft: rgba(var(--ion-color-warning-rgb), 0.16);
+  }
+
+  &.low {
+    --tone: var(--ion-color-success-shade);
+    --tone-soft: rgba(var(--ion-color-success-rgb), 0.14);
+  }
+
+  &.solid {
+    background: var(--tone);
+    color: #fff;
+  }
+
+  &.soft {
+    background: var(--tone-soft);
+    color: var(--ion-text-color);
+  }
+
+  &.done {
+    opacity: 0.55;
+
+    .card__title { text-decoration: line-through; }
+  }
+}
+
+.card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card__title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.card__time {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.card__description {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.8;
+}
+
+.card__foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+
+  ion-checkbox {
+    --size: 18px;
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+}
+
+.card__meta {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+  font-size: 0.72rem;
+  opacity: 0.7;
+}
+
+.card__delete {
+  --color: currentColor;
+  margin: 0;
+  opacity: 0.7;
+}

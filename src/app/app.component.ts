@@ -1,11 +1,25 @@
 import { Component } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+
+import { 
+  IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList,
+  IonListHeader, IonMenu, IonMenuToggle, IonRouterOutlet 
+} from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet],
+  styleUrls: ['app.component.scss'],
+  imports: [
+    RouterLink, RouterLinkActive, IonApp, IonMenu, IonContent, 
+    IonList, IonListHeader, IonItem, IonIcon, IonLabel, 
+    IonMenuToggle, IonRouterOutlet
+  ],
 })
 export class AppComponent {
-  constructor() {}
+  readonly sections = [
+    { path: '/tasks', label: 'Tareas', icon: 'checkbox-outline' },
+    { path: '/tasks/agenda', label: 'Agenda', icon: 'calendar-outline' },
+    { path: '/tasks/alerts', label: 'Avisos', icon: 'notifications-outline' },
+  ];
 }

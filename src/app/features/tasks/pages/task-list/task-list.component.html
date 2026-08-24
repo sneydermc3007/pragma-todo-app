@@ -1,0 +1,76 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button class="round-button" />
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button class="round-button" routerLink="/tasks/alerts" aria-label="Avisos">
+        <ion-icon slot="icon-only" name="notifications-outline" />
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <section class="intro">
+    <p class="intro__greeting">{{ greeting() }}</p>
+    <h1 class="intro__headline">
+      Tenés <span class="accent">{{ monthCount() }} tareas</span> este mes 👍
+    </h1>
+  </section>
+
+  <ion-searchbar
+    class="search"
+    placeholder="Buscar una tarea…"
+    [value]="searchTerm()"
+    (ionInput)="search($any($event).detail.value)" />
+
+  @if (error(); as message) {
+    <p class="error">{{ message }}</p>
+  }
+
+  <section class="section">
+    <header class="section__head">
+      <h2 class="section__title">Tareas de hoy</h2>
+      <button class="section__link" type="button" (click)="goToAgenda()">Ver todas</button>
+    </header>
+
+    @if (todayTasks().length) {
+      <div class="carousel">
+        @for (task of todayTasks(); track task.id) {
+          <app-task-card
+            class="carousel__item"
+            [task]="task"
+            variant="solid"
+            (toggled)="toggle($event)"
+            (removed)="remove($event)" />
+        }
+      </div>
+    } @else {
+      <p class="empty">No tenés nada agendado para hoy. Disfrutá 🎉</p>
+    }
+  </section>
+
+  <section class="section">
+    <header class="section__head">
+      <h2 class="section__title">Todas las tareas</h2>
+    </header>
+
+    @for (task of visibleTasks(); track task.id) {
+      <app-task-card
+        class="stacked"
+        [task]="task"
+        variant="soft"
+        [showDate]="true"
+        (toggled)="toggle($event)"
+        (removed)="remove($event)" />
+    } @empty {
+      <p class="empty">No hay tareas que coincidan con la búsqueda.</p>
+    }
+  </section>
+
+  <ion-button class="fab" (click)="openForm()">
+    <ion-icon slot="start" name="add" />
+    Agregar tarea
+  </ion-button>
+</ion-content>

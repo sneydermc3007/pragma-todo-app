@@ -1,3 +1,25 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu contentId="main-content" type="overlay">
+    <ion-content>
+      <ion-list lines="none">
+        <ion-list-header>Menú</ion-list-header>
+
+        @for (section of sections; track section.path) {
+          <ion-menu-toggle autoHide="false">
+            <ion-item
+              [routerLink]="section.path"
+              routerLinkActive="selected"
+              [routerLinkActiveOptions]="{ exact: false }"
+              button
+              detail="false">
+              <ion-icon slot="start" [name]="section.icon" />
+              <ion-label>{{ section.label }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        }
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main-content" />
 </ion-app>

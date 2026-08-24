@@ -1,0 +1,115 @@
+ion-content {
+  --padding-start: 24px;
+  --padding-end: 24px;
+  --padding-bottom: 96px;
+}
+
+.round-button {
+  --background: var(--ion-color-light);
+  --border-radius: 14px;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  width: 44px;
+  height: 44px;
+}
+
+.intro {
+  margin-bottom: 22px;
+}
+
+.intro__greeting {
+  margin: 0 0 6px;
+  color: var(--ion-color-medium);
+  font-size: 0.95rem;
+}
+
+.intro__headline {
+  margin: 0;
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1.25;
+
+  .accent { color: var(--ion-color-primary); }
+}
+
+.search {
+  --background: var(--ion-color-light);
+  --border-radius: 16px;
+  --box-shadow: none;
+  padding: 0;
+  margin-bottom: 26px;
+}
+
+.section {
+  margin-bottom: 28px;
+}
+
+.section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.section__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.section__link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ion-color-medium);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+/* Carrusel horizontal: las tarjetas del día se recorren de lado, como el mockup. */
+.carousel {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin: 0 -24px;
+  padding-inline: 24px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar { display: none; }
+}
+
+.carousel__item {
+  flex: 0 0 76%;
+  max-width: 300px;
+  scroll-snap-align: start;
+}
+
+.stacked {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.empty {
+  margin: 0;
+  color: var(--ion-color-medium);
+  font-size: 0.9rem;
+}
+
+.error {
+  margin: 0 0 18px;
+  color: var(--ion-color-danger);
+  font-size: 0.9rem;
+}
+
+.fab {
+  --border-radius: 16px;
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  left: 24px;
+  height: 52px;
+  font-weight: 700;
+  z-index: 10;
+}

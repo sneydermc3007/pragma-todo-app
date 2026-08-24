@@ -1,0 +1,22 @@
+ion-menu ion-content {
+  --padding-start: 12px;
+  --padding-end: 12px;
+}
+
+ion-list-header {
+  padding-inline-start: 12px;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+ion-item {
+  --border-radius: 14px;
+  --padding-start: 14px;
+  margin-bottom: 6px;
+  font-weight: 600;
+
+  &.selected {
+    --background: var(--ion-color-light);
+    --color: var(--ion-color-primary);
+  }
+}

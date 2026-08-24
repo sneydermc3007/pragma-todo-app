@@ -1,0 +1,48 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button class="round-button" defaultHref="/tasks" text="" />
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button class="add" (click)="openForm()">
+        <ion-icon slot="start" name="add" />
+        Agregar tarea
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <nav class="week" aria-label="Semana actual">
+    @for (day of week(); track day.key) {
+      <button
+        type="button"
+        class="week__day"
+        [class.selected]="day.key === selectedDate()"
+        [attr.aria-current]="day.key === today ? 'date' : null"
+        (click)="select(day.key)">
+        <span class="week__label">{{ day.label }}</span>
+        <span class="week__number">{{ day.number }}</span>
+        @if (day.key === today) { <span class="week__dot"></span> }
+      </button>
+    }
+  </nav>
+
+  @if (tasks().length) {
+    <ol class="timeline">
+      @for (task of tasks(); track task.id) {
+        <li class="timeline__row">
+          <span class="timeline__node" [class.first]="$first"></span>
+          <app-task-card
+            class="timeline__card"
+            [task]="task"
+            variant="soft"
+            (toggled)="toggle($event)"
+            (removed)="remove($event)" />
+        </li>
+      }
+    </ol>
+  } @else {
+    <p class="empty">No hay tareas para este día.</p>
+  }
+</ion-content>

@@ -1,0 +1,36 @@
+<article class="card" [class]="[variant(), tone()]" [class.done]="task().completed">
+  <header class="card__head">
+    <h3 class="card__title">{{ task().title }}</h3>
+    @if (schedule(); as range) {
+      <span class="card__time">{{ range }}</span>
+    }
+  </header>
+
+  @if (task().description; as description) {
+    <p class="card__description">{{ description }}</p>
+  }
+
+  <footer class="card__foot">
+    <ion-checkbox
+      [checked]="task().completed"
+      (ionChange)="toggled.emit(task().id)"
+      labelPlacement="end"
+      justify="start">
+      {{ task().completed ? 'Completada' : 'Pendiente' }}
+    </ion-checkbox>
+
+    <span class="card__meta">
+      @if (showDate()) { <span>{{ task().scheduledDate }}</span> }
+      @if (edited()) { <span class="card__edited">· editada</span> }
+    </span>
+
+    <ion-button
+      class="card__delete"
+      fill="clear"
+      size="small"
+      (click)="removed.emit(task().id)"
+      [attr.aria-label]="'Eliminar ' + task().title">
+      <ion-icon slot="icon-only" name="trash-outline" />
+    </ion-button>
+  </footer>
+</article>
