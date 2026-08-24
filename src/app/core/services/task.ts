@@ -1,5 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
+import CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
+
+import { defer, from, map, Observable, shareReplay, switchMap } from 'rxjs';
 
 import type { ITask } from '../models/task.model';
 
@@ -7,21 +10,33 @@ const STORAGE_KEY = 'tasks';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  getAll(): Observable<ITask[]> {
+  private storage = inject(Storage);
+
+  private readonly ready$: Observable<Storage> = defer(async () => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return of(raw ? (JSON.parse(raw) as ITask[]) : []);
-    } catch (error) {
-      return throwError(() => new Error('No se pudieron leer las tareas del almacenamiento'));
+      await this.storage.defineDriver(CordovaSQLiteDriver);
+    } catch {
+
     }
+
+    return this.storage.create();
+  }).pipe(shareReplay({ bufferSize: 1, refCount: false }));
+
+  getAll(): Observable<ITask[]> {
+    return this.ready$.pipe(
+      switchMap((storage) => from(storage.get(STORAGE_KEY) as Promise<ITask[] | null>)),
+      map((tasks) => tasks ?? [])
+    );
   }
 
   saveAll(tasks: ITask[]): Observable<void> {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-      return of(void 0);
-    } catch (error) {
-      return throwError(() => new Error('No se pudieron guardar las tareas'));
-    }
+    return this.ready$.pipe(
+      switchMap((storage) => from(storage.set(STORAGE_KEY, tasks))),
+      map(() => undefined)
+    );
+  }
+
+  get driver(): string | null {
+    return this.storage.driver;
   }
 }
