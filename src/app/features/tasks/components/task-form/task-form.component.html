@@ -1,0 +1,59 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Nueva tarea</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-input label="Tarea" labelPlacement="stacked" formControlName="title"
+                 placeholder="¿Qué hay que hacer?" />
+    </ion-item>
+    @if (form.controls.title.touched && form.controls.title.hasError('required')) {
+      <ion-note color="danger">El título es obligatorio.</ion-note>
+    }
+    @if (form.controls.title.hasError('maxlength')) {
+      <ion-note color="danger">Máximo 120 caracteres.</ion-note>
+    }
+
+    <ion-item>
+      <ion-input label="Descripción (opcional)" labelPlacement="stacked"
+                 formControlName="description" placeholder="Algún detalle" />
+    </ion-item>
+    @if (form.controls.description.hasError('maxlength')) {
+      <ion-note color="danger">Máximo 500 caracteres.</ion-note>
+    }
+
+    <ion-item>
+      <ion-select label="Prioridad" labelPlacement="stacked" formControlName="priority">
+        @for (p of priorities; track p) {
+          <ion-select-option [value]="p">{{ priorityLabels[p] }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Día" labelPlacement="stacked" type="date" formControlName="scheduledDate" />
+    </ion-item>
+
+    <div class="times">
+      <ion-item>
+        <ion-input label="Inicio" labelPlacement="stacked" type="time" formControlName="startTime" />
+      </ion-item>
+      <ion-item>
+        <ion-input label="Fin" labelPlacement="stacked" type="time" formControlName="endTime" />
+      </ion-item>
+    </div>
+    @if (form.hasError('timeRange')) {
+      <ion-note color="danger">La hora de fin tiene que ser posterior a la de inicio.</ion-note>
+    }
+
+    <ion-button type="submit" expand="block" class="submit" [disabled]="form.invalid">
+      Agregar tarea
+    </ion-button>
+  </form>
+</ion-content>
