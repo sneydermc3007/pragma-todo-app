@@ -10,5 +10,6 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 ### Added
 
 - Proyecto base Ionic + Angular 21 con plantilla `blank` e integración Cordova.
+- Gestión de tareas: crear, marcar como completada y eliminar, con persistencia local.
 
 [Unreleased]: https://github.com/sneydermc3007/pragma-todo-app/commits/main

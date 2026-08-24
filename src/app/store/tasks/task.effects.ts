@@ -12,14 +12,6 @@ import type { ITask } from '../../core/models/task.model';
 import { newId } from '../../core/utils/id';
 import { TaskService } from '../../core/services/task';
 
-/**
- * Acá vive todo lo que el reducer no puede hacer: generar ids, poner fechas y
- * hablar con el almacenamiento. El reducer solo recibe hechos ya consumados.
- *
- * Criterio de operadores: `switchMap` para lecturas (una carga nueva cancela la
- * anterior) y `concatMap` para escrituras (nunca se cancela una escritura en
- * curso y se respeta el orden en que el usuario pidió las cosas).
- */
 @Injectable()
 export class TaskEffects {
     private actions$: Actions = inject(Actions);
