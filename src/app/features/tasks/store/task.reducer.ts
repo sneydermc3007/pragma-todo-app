@@ -1,12 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
-import type { ITask } from '../../core/models/task.model';
 import { TaskActions } from './task.actions';
+
+import type { ITask } from '../models/task.model';
 
 export interface ITaskState extends EntityState<ITask> {
     loading: boolean;
     error: string | null;
+    searchTerm: string;
 }
 
 export const taskAdapter: EntityAdapter<ITask> = createEntityAdapter<ITask>({
@@ -15,13 +17,14 @@ export const taskAdapter: EntityAdapter<ITask> = createEntityAdapter<ITask>({
 
 export const initialState: ITaskState = taskAdapter.getInitialState({
     loading: false,
-    error: null
+    error: null,
+    searchTerm: ''
 });
 
 export const taskReducer = createReducer(
     initialState,
 
-    // Load Tasks
+    // Load
     on(TaskActions.loadTasks, (state) => ({ ...state, loading: true, error: null })),
     on(TaskActions.loadTasksSuccess, (state, { tasks }) => 
         taskAdapter.setAll(tasks, { ...state, loading: false, error: null })
@@ -30,7 +33,7 @@ export const taskReducer = createReducer(
         ({ ...state, loading: false, error })
     ),
 
-    // Add Task
+    // Add
     on(TaskActions.addTask, (state) => ({ ...state, loading: true, error: null })),
     on(TaskActions.addTaskSuccess, (state, { task }) => 
         taskAdapter.addOne(task, { ...state, loading: false, error: null })
@@ -39,17 +42,20 @@ export const taskReducer = createReducer(
         ({ ...state, loading: false, error })
     ),
 
-    // Update Task
+    // Update
     on(TaskActions.updateTask, (state) => ({ ...state, loading: true, error: null })),
     on(TaskActions.updateTaskSuccess, (state, { task }) =>
         taskAdapter.upsertOne(task, { ...state, loading: false, error: null })
     ),
     on(TaskActions.updateTaskFailure, (state, { error }) => ({ ...state, loading: false, error })),
 
-    // Delete Task
+    // Delete
     on(TaskActions.deleteTask, (state) => ({ ...state, loading: true, error: null })),
     on(TaskActions.deleteTaskSuccess, (state, { id }) =>
         taskAdapter.removeOne(id, { ...state, loading: false, error: null })
     ),
-    on(TaskActions.deleteTaskFailure, (state, { error }) => ({ ...state, loading: false, error })),    
+    on(TaskActions.deleteTaskFailure, (state, { error }) => ({ ...state, loading: false, error })),
+
+    // Búsqueda
+    on(TaskActions.setSearchTerm, (state, { term }) => ({ ...state, searchTerm: term }))
 );

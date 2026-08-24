@@ -1,6 +1,6 @@
 import { createActionGroup, props, emptyProps } from '@ngrx/store';
 
-import type { ITask, TAddTaskPayload, TUpdateTaskPayload } from '../../core/models/task.model';
+import type { ITask, TAddTaskPayload, TUpdateTaskPayload } from '../models/task.model';
 
 export const TaskActions = createActionGroup({
     source: 'Task',
@@ -21,6 +21,8 @@ export const TaskActions = createActionGroup({
         'Delete Task Success': props<{ id: string }>(),
         'Delete Task Failure': props<{ error: string }>(),
 
-        'Toggle Task': props<{ id: string }>()
+        'Toggle Task': props<{ id: string }>(),
+
+        'Set Search Term': props<{ term: string }>()
     }
 })

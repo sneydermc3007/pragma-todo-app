@@ -1,10 +1,13 @@
 import { TestBed } from '@angular/core/testing';
+
 import { Storage } from '@ionic/storage-angular';
 
 import { firstValueFrom } from 'rxjs';
 
-import { TaskService } from './task';
-import { ETaskPriority } from '../enum/task.enum';
+import { TaskService } from './task.service';
+
+import { ETaskPriority } from '../models/task.enum';
+
 import type { ITask } from '../models/task.model';
 
 
@@ -26,6 +29,9 @@ describe('TaskService', () => {
         description: null,
         priority: ETaskPriority.HIGH,
         completed: false,
+        scheduledDate: '2026-08-23',
+        startTime: '10:00',
+        endTime: '11:00',
         createdAt: '2026-08-23T10:00:00.000Z',
         updatedAt: '2026-08-23T10:00:00.000Z'
     };
@@ -106,6 +112,41 @@ describe('TaskService', () => {
             storage.get.mockRejectedValue(new Error('lectura fallida'));
 
             await expect(firstValueFrom(service.getAll())).rejects.toThrow('lectura fallida');
+        });
+    });
+
+    describe('migración del esquema v0.1.0', () => {
+        const legacy = {
+            id: 'legacy-1',
+            title: 'Tarea vieja',
+            description: null,
+            priority: ETaskPriority.LOW,
+            completed: false,
+            createdAt: '2026-08-20T14:30:00.000Z',
+            updatedAt: '2026-08-20T14:30:00.000Z'
+        };
+
+        it('agenda las tareas viejas el día en que fueron creadas', async () => {
+            storage.get.mockResolvedValue([legacy]);
+
+            const [migrated] = await firstValueFrom(service.getAll());
+
+            expect(migrated.scheduledDate).toBe('2026-08-20');
+        });
+
+        it('deja las horas en null y no las inventa', async () => {
+            storage.get.mockResolvedValue([legacy]);
+
+            const [migrated] = await firstValueFrom(service.getAll());
+
+            expect(migrated.startTime).toBeNull();
+            expect(migrated.endTime).toBeNull();
+        });
+
+        it('no toca las tareas que ya tienen el esquema nuevo', async () => {
+            storage.get.mockResolvedValue([task]);
+
+            await expect(firstValueFrom(service.getAll())).resolves.toEqual([task]);
         });
     });
 

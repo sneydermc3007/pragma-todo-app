@@ -15,19 +15,17 @@ import { AppComponent } from './app/app.component';
 
 import { routes } from './app/app.routes';
 
-import { taskReducer } from './app/store/tasks/task.reducer';
-import { TaskEffects } from './app/store/tasks/task.effects';
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideZonelessChangeDetection(),
-    provideEffects(TaskEffects),
-    provideStore({ tasks: taskReducer }, {
+    provideStore({}, {
       runtimeChecks: { strictStateSerializability: true, strictActionSerializability: true },
     }),
+    provideEffects(),
     provideStoreDevtools({ maxAge: 25 }),
-    provideIonicAngular(),
+    provideIonicAngular({ useSetInputAPI: true }),
     importProvidersFrom(IonicStorageModule.forRoot({
       name: 'todoDb',
       storeName: 'tasks',

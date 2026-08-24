@@ -1,16 +1,19 @@
 import { inject, Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+
 import { Store } from '@ngrx/store';
 import { concatLatestFrom } from '@ngrx/operators';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { catchError, concatMap, filter, map, of, switchMap } from 'rxjs';
 
 import { TaskActions } from './task.actions';
 import { selectAllTasks, selectTaskById } from './task.selectors';
 
-import type { ITask } from '../../core/models/task.model';
-import { newId } from '../../core/utils/id';
-import { TaskService } from '../../core/services/task';
+import type { ITask } from '../models/task.model';
+
+import { TaskService } from '../services/task.service';
+
+import { newId } from '../../../core/utils/id';
 
 @Injectable()
 export class TaskEffects {
