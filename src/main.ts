@@ -1,4 +1,4 @@
-import { importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { importProvidersFrom, provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { RouteReuseStrategy, provideRouter, withComponentInputBinding, withPreloading, PreloadAllModules } from '@angular/router';
 
@@ -21,12 +21,12 @@ import { TaskEffects } from './app/store/tasks/task.effects';
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZonelessChangeDetection(),
     provideEffects(TaskEffects),
     provideStore({ tasks: taskReducer }, {
       runtimeChecks: { strictStateSerializability: true, strictActionSerializability: true },
     }),
-    provideStoreDevtools({ maxAge: 25, connectInZone: true }),  
+    provideStoreDevtools({ maxAge: 25 }),
     provideIonicAngular(),
     importProvidersFrom(IonicStorageModule.forRoot({
       name: 'todoDb',
