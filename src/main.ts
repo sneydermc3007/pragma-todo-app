@@ -14,7 +14,10 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { AppComponent } from './app/app.component';
 
 import { routes } from './app/app.routes';
+import { registerAppIcons } from './app/core/icons';
 
+
+registerAppIcons();
 
 bootstrapApplication(AppComponent, {
   providers: [
