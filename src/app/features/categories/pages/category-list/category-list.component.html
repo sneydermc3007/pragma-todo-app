@@ -1,0 +1,42 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button class="round-button" />
+    </ion-buttons>
+    <ion-title>Categorías</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="none">
+    @for (category of categories(); track category.id) {
+      <ion-item class="row">
+        <span class="dot" slot="start" [style.background]="category.color"></span>
+        <ion-label>
+          <h2>{{ category.name }}</h2>
+          <ion-note>
+            {{ countFor(category) }} {{ countFor(category) === 1 ? 'tarea' : 'tareas' }}
+          </ion-note>
+        </ion-label>
+        <ion-button fill="clear" slot="end" (click)="edit(category)"
+                    [attr.aria-label]="'Editar ' + category.name">
+          <ion-icon slot="icon-only" name="create-outline" />
+        </ion-button>
+        <ion-button fill="clear" color="danger" slot="end" (click)="remove(category)"
+                    [attr.aria-label]="'Eliminar ' + category.name">
+          <ion-icon slot="icon-only" name="trash-outline" />
+        </ion-button>
+      </ion-item>
+    } @empty {
+      <div class="empty">
+        <p>Todavía no tenés categorías.</p>
+        <p class="empty__hint">Creá la primera para organizar tus tareas por tema.</p>
+      </div>
+    }
+  </ion-list>
+
+  <ion-button class="fab" (click)="create()">
+    <ion-icon slot="start" name="add" />
+    Nueva categoría
+  </ion-button>
+</ion-content>
