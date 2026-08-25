@@ -7,6 +7,17 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+### Added
+
+- Pruebas unitarias de los reducers, los selectores y los validadores de la app.
+
+### Changed
+
+- La app tiene una paleta propia de colores, espaciados y bordes, definida en un solo lugar y pensada para leerse bien tanto en tema claro como en oscuro.
+- Las tarjetas de la lista ya no se tiñen enteras según la prioridad: la marcan con una barra de color a la izquierda y con la hora resaltada, sobre un fondo neutro que se lee mejor en listas largas.
+- Los márgenes, los bordes redondeados, los tamaños de los botones y los mensajes de lista vacía son iguales en todas las pantallas.
+- Los botones de la barra superior quedaron alineados con el contenido de la página, y los de ícono tienen todos la misma forma y tamaño.
+
 ## [0.7.0] - 2026-08-25
 
 ### Changed

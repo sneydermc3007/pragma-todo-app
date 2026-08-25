@@ -1,34 +1,6 @@
-ion-content {
-  --padding-start: 24px;
-  --padding-end: 24px;
-  --padding-bottom: 32px;
-}
-
-.round-button {
-  --background: var(--ion-color-light);
-  --border-radius: 14px;
-  --color: var(--ion-text-color);
-  width: 44px;
-  height: 44px;
-}
-
-.section {
-  margin-bottom: 28px;
-}
-
 .section__title {
-  margin: 0 0 14px;
-  font-size: 1.2rem;
-  font-weight: 800;
-}
-
-.stacked {
-  display: block;
-  margin-bottom: 12px;
-}
-
-.empty {
-  margin: 0;
-  color: var(--ion-color-medium);
-  font-size: 0.9rem;
+  margin: 0 0 var(--app-space-4);
+  font-size: var(--app-font-lg);
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }

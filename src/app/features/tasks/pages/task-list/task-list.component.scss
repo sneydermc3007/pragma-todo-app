@@ -1,49 +1,56 @@
+ion-content {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+}
 
-
-.round-button {
-  --background: var(--ion-color-light);
-  --border-radius: 14px;
-  --padding-start: 10px;
-  --padding-end: 10px;
-  width: 44px;
-  height: 44px;
+.scroller {
+  height: 100%;
+  overflow-y: auto;
+  padding: 0 var(--app-page-x) var(--app-page-bottom-cta);
+  -webkit-overflow-scrolling: touch;
 }
 
 .intro {
-  margin-bottom: 22px;
+  margin-bottom: var(--app-space-5);
 }
 
 .intro__greeting {
-  margin: 0 0 6px;
-  color: var(--ion-color-medium);
-  font-size: 0.95rem;
+  margin: 0 0 var(--app-space-1);
+  color: var(--app-text-soft);
+  font-size: var(--app-font-md);
+  font-weight: 500;
 }
 
 .intro__headline {
   margin: 0;
-  font-size: 1.65rem;
+  font-size: var(--app-font-xl);
   font-weight: 800;
   line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
 :host ::ng-deep .intro__headline .accent {
-  color: var(--ion-color-primary);
+  color: var(--app-brand);
 }
 
 .search {
-  --background: var(--ion-color-light);
-  --border-radius: 16px;
+  --background: var(--app-surface-alt);
+  --color: var(--app-text);
+  --placeholder-color: var(--app-text-soft);
+  --icon-color: var(--app-text-soft);
+  --border-radius: var(--app-radius-md);
   --box-shadow: none;
   padding: 0;
-  margin-bottom: 26px;
+  margin-bottom: var(--app-space-5);
 }
 
 .chips {
   display: flex;
-  gap: 10px;
+  gap: var(--app-space-2);
   overflow-x: auto;
-  margin: 0 -24px 26px;
-  padding: 2px 24px 6px;
+  margin: 0 calc(var(--app-page-x) * -1) var(--app-space-5);
+  padding: 2px var(--app-page-x) var(--app-space-1);
   -webkit-overflow-scrolling: touch;
 
   &::-webkit-scrollbar { display: none; }
@@ -54,18 +61,20 @@
   align-items: center;
   gap: 7px;
   flex: 0 0 auto;
-  padding: 9px 15px;
-  border: 0;
-  border-radius: 999px;
-  background: var(--ion-color-light);
-  color: var(--ion-color-medium-shade);
-  font-size: 0.85rem;
+  padding: 9px var(--app-space-4);
+  border: 1px solid transparent;
+  border-radius: var(--app-radius-pill);
+  background: var(--app-surface-alt);
+  color: var(--app-text-soft);
+  font-size: var(--app-font-sm);
   font-weight: 600;
   white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
 
   &.selected {
-    background: var(--ion-color-primary);
-    color: #fff;
+    background: var(--app-brand);
+    border-color: var(--app-brand);
+    color: var(--app-on-brand);
   }
 }
 
@@ -75,41 +84,15 @@
   border-radius: 50%;
 }
 
-.section {
-  margin-bottom: 28px;
-}
-
-.section__head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-
-.section__title {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 800;
-}
-
-.section__link {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--ion-color-medium);
-  font-size: 0.88rem;
-  font-weight: 600;
-}
-
 .carousel {
   display: flex;
-  gap: 14px;
+  gap: var(--app-space-3);
   overflow-x: auto;
-  padding-bottom: 6px;
-  margin: 0 -24px;
-  padding-inline: 24px;
+  padding-block: var(--app-space-1);
+  padding-inline: var(--app-page-x);
+  margin: 0 calc(var(--app-page-x) * -1);
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: 24px;
+  scroll-padding-inline: var(--app-page-x);
   -webkit-overflow-scrolling: touch;
 
   &::-webkit-scrollbar { display: none; }
@@ -121,45 +104,20 @@
   scroll-snap-align: start;
 }
 
-.stacked {
-  display: block;
-  margin-bottom: 12px;
-}
-
-.empty {
-  margin: 0;
-  color: var(--ion-color-medium);
-  font-size: 0.9rem;
-}
-
 .error {
-  margin: 0 0 18px;
-  color: var(--ion-color-danger);
-  font-size: 0.9rem;
-}
-
-.fab {
-  --border-radius: 16px;
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  left: 24px;
-  height: 52px;
-  font-weight: 700;
-  z-index: 10;
-}
-
-.scroller {
-  height: 100%;
-  overflow-y: auto;
-  padding: 0 24px 140px;
-  -webkit-overflow-scrolling: touch;
+  margin: 0 0 var(--app-space-4);
+  padding: var(--app-space-3) var(--app-space-4);
+  border-radius: var(--app-radius-md);
+  background: var(--app-priority-high-soft);
+  color: var(--app-priority-high);
+  font-size: var(--app-font-sm);
+  font-weight: 600;
 }
 
 .virtual-list {
   --card-height: 124px;
   --row-height: 136px;
-  --skeleton: rgba(0, 0, 0, 0.06);
+  --skeleton: var(--app-surface-alt);
 
   width: 100%;
   background-image: repeating-linear-gradient(
@@ -173,11 +131,7 @@
 
 .virtual-list app-task-card {
   height: var(--card-height);
-  background: var(--ion-background-color, #fff);
-}
-
-:host-context(.ion-palette-dark) .virtual-list {
-  --skeleton: rgba(255, 255, 255, 0.09);
+  background: var(--app-bg);
 }
 
 :host ::ng-deep .virtual-list .card {

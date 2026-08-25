@@ -1,54 +1,48 @@
-ion-content {
-  --padding-start: 24px;
-  --padding-end: 24px;
-  --padding-bottom: 32px;
-}
-
-.round-button {
-  --background: var(--ion-color-light);
-  --border-radius: 14px;
-  --color: var(--ion-text-color);
-  width: 44px;
-  height: 44px;
-}
-
 .add {
-  --border-radius: 14px;
-  --padding-start: 16px;
-  --padding-end: 16px;
-  height: 44px;
+  --background: var(--app-brand);
+  --color: var(--app-on-brand);
+  --border-radius: var(--app-radius-sm);
+  --padding-start: var(--app-space-4);
+  --padding-end: var(--app-space-4);
+  --box-shadow: none;
+  height: var(--app-control-h);
+  font-size: var(--app-font-sm);
   font-weight: 700;
+  text-transform: none;
 }
 
-/* Tira de la semana */
 .week {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 4px;
-  margin-bottom: 24px;
+  gap: var(--app-space-1);
+  margin-bottom: var(--app-space-5);
+  padding: var(--app-space-2);
+  border-radius: var(--app-radius-md);
+  background: var(--app-surface-sunken);
 }
 
 .week__day {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  padding: 8px 0;
+  gap: var(--app-space-1);
+  padding: var(--app-space-2) 0;
   border: 0;
-  border-radius: 14px;
+  border-radius: var(--app-radius-sm);
   background: none;
-  color: var(--ion-color-medium);
+  color: var(--app-text-soft);
   transition: background 0.15s ease, color 0.15s ease;
 
   &.selected {
-    background: var(--ion-color-light);
-    color: var(--ion-color-primary);
+    background: var(--app-brand);
+    color: var(--app-on-brand);
   }
 }
 
 .week__label {
-  font-size: 0.78rem;
+  font-size: var(--app-font-xs);
   font-weight: 600;
+  text-transform: capitalize;
 }
 
 .week__number {
@@ -60,13 +54,13 @@ ion-content {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--ion-color-primary);
+  background: var(--app-brand);
 }
 
-/*
- * Timeline: el riel es un borde en el nodo, no un pseudo-elemento sobre el
- * contenedor — así crece con el contenido sin cálculos de altura.
- */
+.week__day.selected .week__dot {
+  background: var(--app-on-brand);
+}
+
 .timeline {
   margin: 0;
   padding: 0;
@@ -77,7 +71,7 @@ ion-content {
   display: grid;
   grid-template-columns: 28px 1fr;
   align-items: start;
-  gap: 12px;
+  gap: var(--app-space-3);
 }
 
 .timeline__node {
@@ -94,7 +88,7 @@ ion-content {
     width: 2px;
     height: calc(100% - 22px);
     transform: translateX(-50%);
-    background: rgba(var(--ion-color-medium-rgb), 0.3);
+    background: var(--app-border);
   }
 
   &::after {
@@ -104,9 +98,9 @@ ion-content {
     left: 50%;
     width: 12px;
     height: 12px;
-    border: 2px solid var(--ion-color-primary);
+    border: 2px solid var(--app-brand);
     border-radius: 50%;
-    background: var(--ion-background-color);
+    background: var(--app-bg);
     transform: translateX(-50%);
   }
 
@@ -114,7 +108,7 @@ ion-content {
     width: 16px;
     height: 16px;
     top: 12px;
-    background: var(--ion-color-primary);
+    background: var(--app-brand);
   }
 }
 
@@ -124,11 +118,5 @@ ion-content {
 
 .timeline__card {
   display: block;
-  margin-bottom: 14px;
-}
-
-.empty {
-  margin: 0;
-  color: var(--ion-color-medium);
-  font-size: 0.9rem;
+  margin-bottom: var(--app-space-3);
 }

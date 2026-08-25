@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>{{ (isEditing ? 'taskForm.editTitle' : 'taskForm.newTitle') | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="cancel()">{{ 'common.cancel' | translate }}</ion-button>
+      <ion-button class="ghost" (click)="cancel()">{{ 'common.cancel' | translate }}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

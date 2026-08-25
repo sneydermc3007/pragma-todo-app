@@ -1,52 +1,36 @@
 ion-content {
-  --padding-start: 24px;
-  --padding-end: 24px;
-  --padding-bottom: 140px;
-}
-
-.round-button {
-  --background: var(--ion-color-light);
-  --border-radius: 14px;
-  width: 44px;
-  height: 44px;
+  --padding-bottom: var(--app-page-bottom-cta);
 }
 
 .row {
-  --background: var(--ion-color-light);
-  --border-radius: 16px;
-  --padding-start: 16px;
-  --inner-padding-end: 8px;
-  margin-bottom: 10px;
+  --background: var(--app-surface);
+  --color: var(--app-text);
+  --border-radius: var(--app-radius-md);
+  --padding-start: var(--app-space-4);
+  --inner-padding-end: var(--app-space-2);
+  --min-height: 60px;
+  margin-bottom: var(--app-space-2);
+  border: 1px solid var(--app-border);
+  border-radius: var(--app-radius-md);
+  box-shadow: var(--app-shadow-sm);
 
-  h2 { font-weight: 700; }
+  h2 {
+    font-size: var(--app-font-md);
+    font-weight: 700;
+  }
 }
 
 .dot {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  margin-inline-end: 14px;
-}
-
-.empty {
-  padding: 32px 4px;
-  color: var(--ion-color-medium);
-
-  p { margin: 0 0 6px; }
+  margin-inline-end: var(--app-space-3);
+  box-shadow: 0 0 0 3px var(--app-surface-alt);
 }
 
 .empty__hint {
-  font-size: 0.88rem;
+  display: block;
+  margin-top: var(--app-space-2);
+  font-size: var(--app-font-xs);
   opacity: 0.8;
-}
-
-.fab {
-  --border-radius: 16px;
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  left: 24px;
-  height: 52px;
-  font-weight: 700;
-  z-index: 10;
 }

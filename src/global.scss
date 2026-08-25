@@ -1,36 +1,162 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
-
-/* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
 
-/* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
 @import '@ionic/angular/css/palettes/dark.class.css';
+
+ion-toolbar {
+  --background: var(--app-bg);
+  --color: var(--app-text);
+  --border-width: 0;
+  --min-height: 56px;
+  --padding-start: var(--app-page-x);
+  --padding-end: var(--app-page-x);
+  --padding-top: var(--app-space-1);
+  --padding-bottom: var(--app-space-1);
+}
+
+ion-toolbar ion-buttons,
+ion-toolbar ion-button,
+ion-toolbar ion-menu-button,
+ion-toolbar ion-back-button {
+  margin-inline: 0;
+}
+
+ion-toolbar ion-buttons[slot] ion-button {
+  font-size: var(--app-font-sm);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+ion-toolbar ion-buttons[slot] ion-button.ghost {
+  --color: var(--app-brand);
+  --background-hover: transparent;
+  --padding-start: var(--app-space-2);
+  --padding-end: var(--app-space-2);
+}
+
+ion-toolbar ion-buttons[slot] .round-button {
+  --background: var(--app-surface-alt);
+  --color: var(--app-text);
+  --border-radius: var(--app-radius-pill);
+  --padding-start: 0;
+  --padding-end: 0;
+  width: var(--app-icon-button);
+  height: var(--app-icon-button);
+}
+
+ion-toolbar ion-title {
+  padding-inline: var(--app-space-3);
+}
+
+ion-title {
+  font-size: var(--app-font-lg);
+  font-weight: 700;
+}
+
+ion-content {
+  --background: var(--app-bg);
+  --color: var(--app-text);
+  --padding-start: var(--app-page-x);
+  --padding-end: var(--app-page-x);
+  --padding-bottom: var(--app-page-bottom);
+}
+
+ion-modal {
+  --border-radius: var(--app-radius-lg) var(--app-radius-lg) 0 0;
+  --background: var(--app-bg);
+}
+
+ion-alert,
+ion-toast {
+  --border-radius: var(--app-radius-md);
+}
+
+.round-button {
+  --background: var(--app-surface-alt);
+  --background-hover: var(--app-surface-alt);
+  --color: var(--app-text);
+  --border-radius: var(--app-radius-pill);
+  --padding-start: 0;
+  --padding-end: 0;
+  --box-shadow: none;
+  width: var(--app-icon-button);
+  height: var(--app-icon-button);
+}
+
+.fab {
+  --background: var(--app-brand);
+  --background-activated: var(--app-brand);
+  --color: var(--app-on-brand);
+  --border-radius: var(--app-radius-md);
+  --box-shadow: var(--app-shadow-md);
+  position: fixed;
+  right: var(--app-page-x);
+  bottom: var(--app-page-x);
+  left: var(--app-page-x);
+  height: var(--app-cta-h);
+  font-size: var(--app-font-md);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  z-index: 10;
+}
+
+.section {
+  margin-bottom: var(--app-space-6);
+}
+
+.section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--app-space-3);
+  margin-bottom: var(--app-space-4);
+}
+
+.section__title {
+  margin: 0;
+  font-size: var(--app-font-lg);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.section__link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--app-brand);
+  font-size: var(--app-font-sm);
+  font-weight: 600;
+}
+
+.stacked {
+  display: block;
+  margin-bottom: var(--app-space-3);
+}
+
+.empty {
+  margin: 0;
+  padding: var(--app-space-5) var(--app-space-4);
+  border: 1px dashed var(--app-border);
+  border-radius: var(--app-radius-md);
+  background: var(--app-surface-sunken);
+  color: var(--app-text-soft);
+  font-size: var(--app-font-sm);
+  line-height: 1.5;
+  text-align: center;
+
+  p {
+    margin: 0;
+  }
+}
