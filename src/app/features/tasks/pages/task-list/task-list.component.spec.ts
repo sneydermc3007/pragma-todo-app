@@ -1,4 +1,6 @@
 import { provideRouter } from '@angular/router';
+import { By } from '@angular/platform-browser';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { provideTranslateService } from '@ngx-translate/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -167,6 +169,54 @@ describe('TaskListComponent', () => {
       component.openForm(task);
 
       expect(taskForm.open).toHaveBeenCalledWith(task);
+    });
+  });
+
+  describe('trackById', () => {
+    it('identifica cada tarea por su id', () => {
+      const task = { id: 'task-7' } as never;
+
+      expect(component.trackById(0, task)).toBe('task-7');
+    });
+  });
+
+  describe('posición del scroll al cambiar de pantalla', () => {
+    const scrollableTop = (): { get: () => number; set: (value: number) => void } => {
+      const scroller = fixture.nativeElement.querySelector('.scroller') as HTMLElement;
+      let top = 0;
+
+      Object.defineProperty(scroller, 'scrollTop', {
+        configurable: true,
+        get: () => top,
+        set: (value: number) => { top = value; },
+      });
+
+      return { get: () => top, set: (value: number) => { top = value; } };
+    };
+
+    it('restaura el desplazamiento que tenía al salir', () => {
+      const scrollTop = scrollableTop();
+
+      scrollTop.set(1200);
+      component.ionViewWillLeave();
+
+      scrollTop.set(0);
+      component.ionViewDidEnter();
+
+      expect(scrollTop.get()).toBe(1200);
+    });
+
+    it('vuelve a medir el viewport al entrar, porque estaba oculto', () => {
+      scrollableTop();
+
+      const viewport = fixture.debugElement
+        .query(By.directive(CdkVirtualScrollViewport))
+        .injector.get(CdkVirtualScrollViewport);
+      const checkViewportSize = vi.spyOn(viewport, 'checkViewportSize');
+
+      component.ionViewDidEnter();
+
+      expect(checkViewportSize).toHaveBeenCalled();
     });
   });
 
