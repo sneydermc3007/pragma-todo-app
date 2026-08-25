@@ -7,7 +7,7 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 import CordovaSQLiteDriver from 'localforage-cordovasqlitedriver';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular';
 
-import { provideStore } from '@ngrx/store';
+import { provideState, provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
@@ -15,6 +15,9 @@ import { AppComponent } from './app/app.component';
 
 import { routes } from './app/app.routes';
 import { registerAppIcons } from './app/core/icons';
+import { CATEGORIES_FEATURE_KEY } from './app/features/categories/models/category.const';
+import { categoryReducer } from './app/features/categories/store/category.reducer';
+import { CategoryEffects } from './app/features/categories/store/category.effects';
 
 
 registerAppIcons();
@@ -26,7 +29,8 @@ bootstrapApplication(AppComponent, {
     provideStore({}, {
       runtimeChecks: { strictStateSerializability: true, strictActionSerializability: true },
     }),
-    provideEffects(),
+    provideState({ name: CATEGORIES_FEATURE_KEY, reducer: categoryReducer }),
+    provideEffects(CategoryEffects),
     provideStoreDevtools({ maxAge: 25 }),
     provideIonicAngular({ useSetInputAPI: true }),
     importProvidersFrom(IonicStorageModule.forRoot({
