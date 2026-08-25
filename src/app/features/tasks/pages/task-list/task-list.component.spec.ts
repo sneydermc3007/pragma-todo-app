@@ -1,5 +1,6 @@
 import { provideRouter } from '@angular/router';
 import { provideZonelessChangeDetection } from '@angular/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 
@@ -28,6 +29,7 @@ describe('TaskListComponent', () => {
       imports: [TaskListComponent],
       providers: [
         provideZonelessChangeDetection(),
+        provideTranslateService(),
         provideRouter([]),
         { provide: TaskFormService, useValue: taskForm },
         provideMockStore({
@@ -64,28 +66,28 @@ describe('TaskListComponent', () => {
   });
 
   describe('saludo según la hora', () => {
-    const greetingAt = (hour: number): string => {
+    const greetingKeyAt = (hour: number): string => {
       vi.useFakeTimers({ toFake: ['Date'] });
       vi.setSystemTime(new Date(2026, 7, 23, hour, 0, 0));
 
       const local = TestBed.createComponent(TaskListComponent).componentInstance;
-      const greeting = local.greeting();
+      const greeting = local.greetingKey();
 
       vi.useRealTimers();
 
       return greeting;
     };
 
-    it('dice buenos días por la mañana', () => {
-      expect(greetingAt(9)).toBe('Buenos días');
+    it('usa la clave de la mañana antes del mediodía', () => {
+      expect(greetingKeyAt(9)).toBe('greeting.morning');
     });
 
-    it('dice buenas tardes por la tarde', () => {
-      expect(greetingAt(15)).toBe('Buenas tardes');
+    it('usa la clave de la tarde entre las 12 y las 19', () => {
+      expect(greetingKeyAt(15)).toBe('greeting.afternoon');
     });
 
-    it('dice buenas noches por la noche', () => {
-      expect(greetingAt(21)).toBe('Buenas noches');
+    it('usa la clave de la noche desde las 19', () => {
+      expect(greetingKeyAt(21)).toBe('greeting.evening');
     });
   });
 
@@ -113,6 +115,19 @@ describe('TaskListComponent', () => {
       store.refreshState();
 
       expect(component.hasActiveFilters()).toBe(true);
+    });
+  });
+
+  describe('headlineKey', () => {
+    it('usa el singular con una sola tarea', () => {
+      store.overrideSelector(selectMonthTaskCount, 1);
+      store.refreshState();
+
+      expect(component.headlineKey()).toBe('home.headline.one');
+    });
+
+    it('usa el plural con cero o varias', () => {
+      expect(component.headlineKey()).toBe('home.headline.other');
     });
   });
 

@@ -3,6 +3,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonButton, IonButtons, IonContent, IonHeader, IonInput, IonItem, IonNote,
          IonSelect, IonSelectOption, IonTitle, IonToolbar, ModalController } from '@ionic/angular';
 
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { ETaskPriority } from '../../models/task.enum';
 import { todayKey } from '../../../../core/utils/date';
 import { notBlank } from '../../../../core/validators/not-blank.validator';
@@ -14,7 +16,7 @@ import type { ICategory } from '../../../categories/models/category.model';
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton,
+  imports: [TranslatePipe, ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton,
             IonContent, IonItem, IonInput, IonSelect, IonSelectOption, IonNote],
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.scss'],
@@ -30,11 +32,7 @@ export class TaskFormComponent implements OnInit {
 
   readonly priorities = Object.values(ETaskPriority);
 
-  readonly priorityLabels: Record<ETaskPriority, string> = {
-    [ETaskPriority.HIGH]: 'Alta',
-    [ETaskPriority.MEDIUM]: 'Media',
-    [ETaskPriority.LOW]: 'Baja',
-  };
+  readonly priorityKey = (priority: ETaskPriority): string => `priority.${priority}`;
 
   readonly form = this.fb.nonNullable.group(
     {

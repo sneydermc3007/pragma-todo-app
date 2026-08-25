@@ -1,4 +1,5 @@
 import { provideZonelessChangeDetection } from '@angular/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalController } from '@ionic/angular';
 
@@ -27,6 +28,7 @@ describe('CategoryFormComponent', () => {
       imports: [CategoryFormComponent],
       providers: [
         provideZonelessChangeDetection(),
+        provideTranslateService(),
         { provide: ModalController, useValue: modalCtrl },
       ],
     });

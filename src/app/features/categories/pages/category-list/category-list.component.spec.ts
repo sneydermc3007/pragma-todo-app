@@ -1,4 +1,5 @@
 import { provideZonelessChangeDetection } from '@angular/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AlertController, ModalController } from '@ionic/angular';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -46,6 +47,7 @@ describe('CategoryListComponent', () => {
       imports: [CategoryListComponent],
       providers: [
         provideZonelessChangeDetection(),
+        provideTranslateService(),
         { provide: ModalController, useValue: modalCtrl },
         { provide: AlertController, useValue: alertCtrl },
         provideMockStore({
@@ -65,6 +67,20 @@ describe('CategoryListComponent', () => {
     dispatch = vi.spyOn(store, 'dispatch');
 
     await fixture.whenStable();
+  });
+
+  describe('countKey', () => {
+    it('usa el singular con una sola tarea', () => {
+      store.overrideSelector(selectTaskCountByCategory, { 'cat-1': 1 });
+      store.refreshState();
+
+      expect(component.countKey(category())).toBe('categories.count.one');
+    });
+
+    it('usa el plural con ninguna o varias', () => {
+      expect(component.countKey(category())).toBe('categories.count.other');
+      expect(component.countKey(category({ id: 'cat-9' }))).toBe('categories.count.other');
+    });
   });
 
   it('pide categorías y tareas al inicializarse', () => {
@@ -117,9 +133,7 @@ describe('CategoryListComponent', () => {
       await component.remove(category());
 
       expect(alertCtrl.create).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: '3 tareas van a quedar sin categoría. Las tareas no se borran.',
-        })
+        expect.objectContaining({ message: 'categories.deleteImpact.other' })
       );
       expect(dispatch).toHaveBeenCalledWith(CategoryActions.deleteCategory({ id: 'cat-1' }));
     });
@@ -132,9 +146,7 @@ describe('CategoryListComponent', () => {
       await component.remove(category());
 
       expect(alertCtrl.create).toHaveBeenCalledWith(
-        expect.objectContaining({
-          message: '1 tarea va a quedar sin categoría. Las tareas no se borran.',
-        })
+        expect.objectContaining({ message: 'categories.deleteImpact.one' })
       );
     });
 
@@ -142,7 +154,7 @@ describe('CategoryListComponent', () => {
       await component.remove(category({ id: 'cat-9' }));
 
       expect(alertCtrl.create).toHaveBeenCalledWith(
-        expect.objectContaining({ message: 'Ninguna tarea usa esta categoría.' })
+        expect.objectContaining({ message: 'categories.deleteNoImpact' })
       );
     });
 

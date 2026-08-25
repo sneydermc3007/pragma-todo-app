@@ -1,4 +1,5 @@
 import { provideZonelessChangeDetection } from '@angular/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -45,6 +46,7 @@ describe('TaskEffects · unassignDeletedCategory$', () => {
         TestBed.configureTestingModule({
             providers: [
                 provideZonelessChangeDetection(),
+        provideTranslateService(),
                 TaskEffects,
                 provideMockActions(() => actions$),
                 provideMockStore({ selectors: [{ selector: selectAllTasks, value: tasks }] }),

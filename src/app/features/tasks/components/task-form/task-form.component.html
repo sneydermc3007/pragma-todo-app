@@ -1,8 +1,8 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>{{ isEditing ? 'Editar tarea' : 'Nueva tarea' }}</ion-title>
+    <ion-title>{{ (isEditing ? 'taskForm.editTitle' : 'taskForm.newTitle') | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="cancel()">Cancelar</ion-button>
+      <ion-button (click)="cancel()">{{ 'common.cancel' | translate }}</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -10,36 +10,36 @@
 <ion-content class="ion-padding">
   <form [formGroup]="form" (ngSubmit)="submit()">
     <ion-item>
-      <ion-input label="Tarea" labelPlacement="stacked" formControlName="title"
-                 placeholder="¿Qué hay que hacer?" />
+      <ion-input [label]="'taskForm.title' | translate" labelPlacement="stacked" formControlName="title"
+                 [placeholder]="'taskForm.titlePlaceholder' | translate" />
     </ion-item>
     @if (form.controls.title.touched && form.controls.title.hasError('required')) {
-      <ion-note color="danger">El título es obligatorio.</ion-note>
+      <ion-note color="danger">{{ 'taskForm.errors.titleRequired' | translate }}</ion-note>
     }
     @if (form.controls.title.hasError('maxlength')) {
-      <ion-note color="danger">Máximo 120 caracteres.</ion-note>
+      <ion-note color="danger">{{ 'taskForm.errors.titleMax' | translate }}</ion-note>
     }
 
     <ion-item>
-      <ion-input label="Descripción (opcional)" labelPlacement="stacked"
-                 formControlName="description" placeholder="Algún detalle" />
+      <ion-input [label]="'taskForm.description' | translate" labelPlacement="stacked"
+                 formControlName="description" [placeholder]="'taskForm.descriptionPlaceholder' | translate" />
     </ion-item>
     @if (form.controls.description.hasError('maxlength')) {
-      <ion-note color="danger">Máximo 500 caracteres.</ion-note>
+      <ion-note color="danger">{{ 'taskForm.errors.descriptionMax' | translate }}</ion-note>
     }
 
     <ion-item>
-      <ion-select label="Prioridad" labelPlacement="stacked" formControlName="priority">
+      <ion-select [label]="'taskForm.priority' | translate" labelPlacement="stacked" formControlName="priority">
         @for (p of priorities; track p) {
-          <ion-select-option [value]="p">{{ priorityLabels[p] }}</ion-select-option>
+          <ion-select-option [value]="p">{{ priorityKey(p) | translate }}</ion-select-option>
         }
       </ion-select>
     </ion-item>
 
     <ion-item>
-      <ion-select label="Categoría" labelPlacement="stacked" formControlName="categoryId"
-                  placeholder="Sin categoría">
-        <ion-select-option [value]="''">Sin categoría</ion-select-option>
+      <ion-select [label]="'taskForm.category' | translate" labelPlacement="stacked" formControlName="categoryId"
+                  [placeholder]="'common.noCategory' | translate">
+        <ion-select-option [value]="''">{{ 'common.noCategory' | translate }}</ion-select-option>
         @for (category of categories(); track category.id) {
           <ion-select-option [value]="category.id">{{ category.name }}</ion-select-option>
         }
@@ -47,23 +47,23 @@
     </ion-item>
 
     <ion-item>
-      <ion-input label="Día" labelPlacement="stacked" type="date" formControlName="scheduledDate" />
+      <ion-input [label]="'taskForm.day' | translate" labelPlacement="stacked" type="date" formControlName="scheduledDate" />
     </ion-item>
 
     <div class="times">
       <ion-item>
-        <ion-input label="Inicio" labelPlacement="stacked" type="time" formControlName="startTime" />
+        <ion-input [label]="'taskForm.start' | translate" labelPlacement="stacked" type="time" formControlName="startTime" />
       </ion-item>
       <ion-item>
-        <ion-input label="Fin" labelPlacement="stacked" type="time" formControlName="endTime" />
+        <ion-input [label]="'taskForm.end' | translate" labelPlacement="stacked" type="time" formControlName="endTime" />
       </ion-item>
     </div>
     @if (form.hasError('timeRange')) {
-      <ion-note color="danger">La hora de fin tiene que ser posterior a la de inicio.</ion-note>
+      <ion-note color="danger">{{ 'taskForm.errors.timeRange' | translate }}</ion-note>
     }
 
     <ion-button type="submit" expand="block" class="submit" [disabled]="form.invalid">
-      {{ isEditing ? 'Guardar cambios' : 'Agregar tarea' }}
+      {{ (isEditing ? 'common.save' : 'taskForm.submitNew') | translate }}
     </ion-button>
   </form>
 </ion-content>

@@ -28,8 +28,10 @@ ion-content {
   font-size: 1.65rem;
   font-weight: 800;
   line-height: 1.25;
+}
 
-  .accent { color: var(--ion-color-primary); }
+:host ::ng-deep .intro__headline .accent {
+  color: var(--ion-color-primary);
 }
 
 .search {

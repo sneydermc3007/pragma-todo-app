@@ -3,6 +3,7 @@ import { AlertController, IonButton, IonButtons, IonContent, IonHeader, IonIcon,
          IonLabel, IonList, IonMenuButton, IonNote, IonTitle, IonToolbar,
          ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 import { CategoryFormComponent } from '../../components/category-form/category-form.component';
 
@@ -16,7 +17,7 @@ import type { ICategory, TAddCategoryPayload } from '../../models/category.model
 @Component({
   selector: 'app-category-list',
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton, IonButton, IonIcon,
+  imports: [TranslatePipe, IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton, IonButton, IonIcon,
             IonContent, IonList, IonItem, IonLabel, IonNote],
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.scss'],
@@ -26,6 +27,7 @@ export class CategoryListComponent implements OnInit {
   private store = inject(Store);
   private modalCtrl = inject(ModalController);
   private alertCtrl = inject(AlertController);
+  private translate = inject(TranslateService);
 
   readonly categories = this.store.selectSignal(selectAllCategories);
   readonly taskCounts = this.store.selectSignal(selectTaskCountByCategory);
@@ -38,6 +40,10 @@ export class CategoryListComponent implements OnInit {
 
   countFor(category: ICategory): number {
     return this.taskCounts()[category.id] ?? 0;
+  }
+
+  countKey(category: ICategory): string {
+    return this.countFor(category) === 1 ? 'categories.count.one' : 'categories.count.other';
   }
 
   async create(): Promise<void> {
@@ -59,14 +65,16 @@ export class CategoryListComponent implements OnInit {
   async remove(category: ICategory): Promise<void> {
     const count = this.countFor(category);
 
+    const impactKey = count === 1 ? 'categories.deleteImpact.one' : 'categories.deleteImpact.other';
+
     const alert = await this.alertCtrl.create({
-      header: `Eliminar «${category.name}»`,
+      header: this.translate.instant('categories.deleteHeader', { name: category.name }),
       message: count
-        ? `${count} ${count === 1 ? 'tarea va a quedar' : 'tareas van a quedar'} sin categoría. Las tareas no se borran.`
-        : 'Ninguna tarea usa esta categoría.',
+        ? this.translate.instant(impactKey, { count })
+        : this.translate.instant('categories.deleteNoImpact'),
       buttons: [
-        { text: 'Cancelar', role: 'cancel' },
-        { text: 'Eliminar', role: 'destructive' },
+        { text: this.translate.instant('common.cancel'), role: 'cancel' },
+        { text: this.translate.instant('common.delete'), role: 'destructive' },
       ],
     });
 

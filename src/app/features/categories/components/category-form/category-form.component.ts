@@ -3,6 +3,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonButton, IonButtons, IonContent, IonHeader, IonInput, IonItem, IonNote,
          IonTitle, IonToolbar, ModalController } from '@ionic/angular';
 
+import { TranslatePipe } from '@ngx-translate/core';
+
 import { CATEGORY_COLORS } from '../../models/category.const';
 import { uniqueName } from '../../validators/unique-name.validator';
 import { notBlank } from '../../../../core/validators/not-blank.validator';
@@ -12,7 +14,7 @@ import type { ICategory, TAddCategoryPayload } from '../../models/category.model
 @Component({
   selector: 'app-category-form',
   standalone: true,
-  imports: [ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton,
+  imports: [TranslatePipe, ReactiveFormsModule, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton,
             IonContent, IonItem, IonInput, IonNote],
   templateUrl: './category-form.component.html',
   styleUrls: ['./category-form.component.scss'],

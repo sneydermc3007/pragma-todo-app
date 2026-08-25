@@ -16,7 +16,7 @@
       (ionChange)="toggled.emit(task().id)"
       labelPlacement="end"
       justify="start">
-      {{ task().completed ? 'Completada' : 'Pendiente' }}
+      {{ (task().completed ? 'card.completed' : 'card.pending') | translate }}
     </ion-checkbox>
 
     <span class="card__meta">
@@ -26,7 +26,7 @@
         </span>
       }
       @if (showDate()) { <span>{{ task().scheduledDate }}</span> }
-      @if (wasEdited()) { <span class="card__edited">· editada</span> }
+      @if (wasEdited()) { <span class="card__edited">{{ 'card.edited' | translate }}</span> }
     </span>
 
     <ion-button
@@ -34,7 +34,7 @@
       fill="clear"
       size="small"
       (click)="edited.emit(task())"
-      [attr.aria-label]="'Editar ' + task().title">
+      [attr.aria-label]="'card.editAria' | translate:{ title: task().title }">
       <ion-icon slot="icon-only" name="create-outline" />
     </ion-button>
 
@@ -43,7 +43,7 @@
       fill="clear"
       size="small"
       (click)="removed.emit(task().id)"
-      [attr.aria-label]="'Eliminar ' + task().title">
+      [attr.aria-label]="'card.deleteAria' | translate:{ title: task().title }">
       <ion-icon slot="icon-only" name="trash-outline" />
     </ion-button>
   </footer>

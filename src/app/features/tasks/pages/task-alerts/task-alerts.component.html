@@ -3,32 +3,32 @@
     <ion-buttons slot="start">
       <ion-back-button class="round-button" defaultHref="/tasks" text="" />
     </ion-buttons>
-    <ion-title>Avisos</ion-title>
+    <ion-title>{{ 'alerts.title' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <section class="section">
-    <h2 class="section__title">Vencidas</h2>
+    <h2 class="section__title">{{ 'alerts.overdue' | translate }}</h2>
 
     @for (task of overdue(); track task.id) {
       <app-task-card class="stacked" [task]="task" variant="soft" [showDate]="true"
                      [category]="categoryOf(task)"
                      (toggled)="toggle($event)" (edited)="openForm($event)" (removed)="remove($event)" />
     } @empty {
-      <p class="empty">Nada vencido. Vas al día 👌</p>
+      <p class="empty">{{ 'alerts.overdueEmpty' | translate }}</p>
     }
   </section>
 
   <section class="section">
-    <h2 class="section__title">Próximas</h2>
+    <h2 class="section__title">{{ 'alerts.upcoming' | translate }}</h2>
 
     @for (task of upcoming(); track task.id) {
       <app-task-card class="stacked" [task]="task" variant="soft" [showDate]="true"
                      [category]="categoryOf(task)"
                      (toggled)="toggle($event)" (edited)="openForm($event)" (removed)="remove($event)" />
     } @empty {
-      <p class="empty">No tenés tareas pendientes agendadas.</p>
+      <p class="empty">{{ 'alerts.upcomingEmpty' | translate }}</p>
     }
   </section>
 </ion-content>

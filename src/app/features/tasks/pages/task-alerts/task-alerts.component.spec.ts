@@ -1,4 +1,5 @@
 import { provideZonelessChangeDetection } from '@angular/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
@@ -39,6 +40,7 @@ describe('TaskAlertsComponent', () => {
       imports: [TaskAlertsComponent],
       providers: [
         provideZonelessChangeDetection(),
+        provideTranslateService(),
         { provide: TaskFormService, useValue: { open: vi.fn() } },
         provideMockStore({
           selectors: [

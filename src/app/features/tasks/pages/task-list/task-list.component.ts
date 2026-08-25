@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton,
          IonSearchbar, IonToolbar } from '@ionic/angular';
 import { Store } from '@ngrx/store';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { TaskCardComponent } from '../../components/task-card/task-card.component';
 
@@ -20,7 +21,7 @@ import type { ICategory } from '../../../categories/models/category.model';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [RouterLink, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonButton,
+  imports: [TranslatePipe, RouterLink, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonButton,
             IonIcon, IonContent, IonSearchbar, TaskCardComponent],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
@@ -52,13 +53,17 @@ export class TaskListComponent implements OnInit {
 
   private readonly hour = signal(new Date().getHours());
 
-  readonly greeting = computed(() => {
+  readonly greetingKey = computed(() => {
     const hour = this.hour();
-    if (hour < 12) return 'Buenos días';
-    if (hour < 19) return 'Buenas tardes';
+    if (hour < 12) return 'greeting.morning';
+    if (hour < 19) return 'greeting.afternoon';
 
-    return 'Buenas noches';
+    return 'greeting.evening';
   });
+
+  readonly headlineKey = computed(() =>
+    this.monthCount() === 1 ? 'home.headline.one' : 'home.headline.other'
+  );
 
   ngOnInit(): void {
     this.store.dispatch(TaskActions.loadTasks());

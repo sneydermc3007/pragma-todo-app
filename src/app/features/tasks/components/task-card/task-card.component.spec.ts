@@ -1,4 +1,5 @@
 import { provideZonelessChangeDetection } from '@angular/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TaskCardComponent } from './task-card.component';
@@ -29,7 +30,7 @@ describe('TaskCardComponent', () => {
   beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [TaskCardComponent],
-      providers: [provideZonelessChangeDetection()],
+      providers: [provideZonelessChangeDetection(), provideTranslateService()],
     });
 
     fixture = TestBed.createComponent(TaskCardComponent);

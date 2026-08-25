@@ -1,4 +1,5 @@
 import { provideZonelessChangeDetection } from '@angular/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 
@@ -30,6 +31,7 @@ describe('TaskAgendaComponent', () => {
       imports: [TaskAgendaComponent],
       providers: [
         provideZonelessChangeDetection(),
+        provideTranslateService(),
         { provide: TaskFormService, useValue: taskForm },
         provideMockStore({
           selectors: [
@@ -63,8 +65,16 @@ describe('TaskAgendaComponent', () => {
       const week = component.week();
 
       expect(week).toHaveLength(7);
-      expect(week[0].label).toBe('Lun');
-      expect(week[6].label).toBe('Dom');
+      expect(new Date(`${week[0].key}T00:00:00`).getDay()).toBe(1);
+      expect(new Date(`${week[6].key}T00:00:00`).getDay()).toBe(0);
+    });
+
+    it('etiqueta cada día con el nombre corto del locale', () => {
+      const labels = component.week().map((day) => day.label);
+
+      expect(labels).toHaveLength(7);
+      expect(labels.every((label) => label.length > 0)).toBe(true);
+      expect(new Set(labels).size).toBe(7);
     });
 
     it('usa las claves de fecha local de la semana en curso', () => {

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 import { Store } from '@ngrx/store';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 import { TaskActions } from '../../store/task.actions';
@@ -18,6 +19,7 @@ import { TaskCardComponent } from '../../components/task-card/task-card.componen
   selector: 'app-task-alerts',
   standalone: true,
   imports: [
+    TranslatePipe,
     IonHeader, IonToolbar, IonTitle, IonButtons, IonBackButton, 
     IonContent, TaskCardComponent
   ],

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { IonButton, IonCheckbox, IonIcon } from '@ionic/angular';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { ETaskPriority } from '../../models/task.enum';
 import { formatTime } from '../../../../core/utils/date';
@@ -15,7 +16,7 @@ const PRIORITY_TONE: Record<ETaskPriority, string> = {
 @Component({
   selector: 'app-task-card',
   standalone: true,
-  imports: [IonCheckbox, IonIcon, IonButton],
+  imports: [TranslatePipe, IonCheckbox, IonIcon, IonButton],
   templateUrl: './task-card.component.html',
   styleUrls: ['./task-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

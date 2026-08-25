@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, LOCALE_ID, OnInit, signal } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon,
          IonToolbar } from '@ionic/angular';
 import { Store } from '@ngrx/store';
@@ -14,12 +16,10 @@ import { toDateKey, todayKey, weekOf } from '../../../../core/utils/date';
 import type { ITask } from '../../models/task.model';
 import type { ICategory } from '../../../categories/models/category.model';
 
-const DAY_LABELS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
-
 @Component({
   selector: 'app-task-agenda',
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonButtons, IonBackButton, IonButton, IonIcon,
+  imports: [TranslatePipe, IonHeader, IonToolbar, IonButtons, IonBackButton, IonButton, IonIcon,
             IonContent, TaskCardComponent],
   templateUrl: './task-agenda.component.html',
   styleUrls: ['./task-agenda.component.scss'],
@@ -28,6 +28,7 @@ const DAY_LABELS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 export class TaskAgendaComponent implements OnInit {
   private store = inject(Store);
   private taskForm = inject(TaskFormService);
+  private locale = inject(LOCALE_ID);
 
   private readonly visibleTasks = this.store.selectSignal(selectVisibleTasks);
 
@@ -43,7 +44,7 @@ export class TaskAgendaComponent implements OnInit {
   readonly week = computed(() =>
     weekOf(new Date()).map((date) => ({
       key: toDateKey(date),
-      label: DAY_LABELS[(date.getDay() + 6) % 7],
+      label: formatDate(date, 'EEE', this.locale),
       number: date.getDate(),
     }))
   );

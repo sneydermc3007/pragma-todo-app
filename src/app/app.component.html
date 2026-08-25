@@ -2,7 +2,7 @@
   <ion-menu contentId="main-content" type="overlay">
     <ion-content>
       <ion-list lines="none">
-        <ion-list-header>Menú</ion-list-header>
+        <ion-list-header>{{ 'menu.title' | translate }}</ion-list-header>
 
         @for (section of sections; track section.path) {
           <ion-menu-toggle autoHide="false">
@@ -13,7 +13,7 @@
               button
               detail="false">
               <ion-icon slot="start" [name]="section.icon" />
-              <ion-label>{{ section.label }}</ion-label>
+              <ion-label>{{ section.label | translate }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         }

@@ -1,6 +1,7 @@
 import { Component, effect, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { RemoteConfigActions } from './features/remote-config/store/remote-config.actions';
 import { selectDarkModeEnabled } from './features/remote-config/store/remote-config.selectors';
@@ -15,6 +16,7 @@ import {
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   imports: [
+    TranslatePipe,
     RouterLink, RouterLinkActive, IonApp, IonMenu, IonContent, 
     IonList, IonListHeader, IonItem, IonIcon, IonLabel, 
     IonMenuToggle, IonRouterOutlet
@@ -36,9 +38,9 @@ export class AppComponent implements OnInit {
   }
 
   readonly sections = [
-    { path: '/tasks', label: 'Tareas', icon: 'checkbox-outline' },
-    { path: '/tasks/agenda', label: 'Agenda', icon: 'calendar-outline' },
-    { path: '/tasks/alerts', label: 'Avisos', icon: 'notifications-outline' },
-    { path: '/categories', label: 'Categorías', icon: 'pricetags-outline' },
+    { path: '/tasks', label: 'menu.tasks', icon: 'checkbox-outline' },
+    { path: '/tasks/agenda', label: 'menu.agenda', icon: 'calendar-outline' },
+    { path: '/tasks/alerts', label: 'menu.alerts', icon: 'notifications-outline' },
+    { path: '/categories', label: 'menu.categories', icon: 'pricetags-outline' },
   ];
 }

@@ -1,4 +1,5 @@
 import { provideZonelessChangeDetection } from '@angular/core';
+import { provideTranslateService } from '@ngx-translate/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -17,6 +18,7 @@ describe('AppComponent', () => {
       imports: [AppComponent],
       providers: [
         provideZonelessChangeDetection(),
+        provideTranslateService(),
         provideRouter([]),
         provideMockStore({ selectors: [{ selector: selectDarkModeEnabled, value: false }] }),
       ],
