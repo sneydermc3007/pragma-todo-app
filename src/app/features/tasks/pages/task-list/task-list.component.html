@@ -12,7 +12,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [scrollY]="false">
+  <div class="scroller" cdkVirtualScrollingElement #scroller>
   <section class="intro">
     <p class="intro__greeting">{{ greetingKey() | translate }}</p>
     <h1 class="intro__headline" [innerHTML]="headlineKey() | translate:{ count: monthCount() }"></h1>
@@ -85,18 +86,21 @@
       <h2 class="section__title">{{ 'home.allTitle' | translate }}</h2>
     </header>
 
-    @for (task of visibleTasks(); track task.id) {
+    <cdk-virtual-scroll-viewport itemSize="136" [minBufferPx]="600" [maxBufferPx]="1200" class="virtual-list">
       <app-task-card
+        *cdkVirtualFor="let task of visibleTasks(); trackBy: trackById; templateCacheSize: 20"
         class="stacked"
         [task]="task"
         variant="soft"
         [showDate]="true"
         [use24hClock]="use24hClock()"
-            [category]="categoryOf(task)"
+        [category]="categoryOf(task)"
         (toggled)="toggle($event)"
         (edited)="openForm($event)"
         (removed)="remove($event)" />
-    } @empty {
+    </cdk-virtual-scroll-viewport>
+
+    @if (!visibleTasks().length) {
       @if (hasActiveFilters()) {
         <p class="empty">{{ 'home.allEmptyFiltered' | translate }}</p>
       } @else {
@@ -104,6 +108,8 @@
       }
     }
   </section>
+
+  </div>
 
   <ion-button class="fab" (click)="openForm()">
     <ion-icon slot="start" name="add" />

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton,
          IonSearchbar, IonToolbar } from '@ionic/angular';
 import { Store } from '@ngrx/store';
@@ -23,7 +24,7 @@ import type { ICategory } from '../../../categories/models/category.model';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [TranslatePipe, RouterLink, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonButton,
+  imports: [ScrollingModule, TranslatePipe, RouterLink, IonHeader, IonToolbar, IonButtons, IonMenuButton, IonButton,
             IonIcon, IonContent, IonSearchbar, TaskCardComponent],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
@@ -70,9 +71,30 @@ export class TaskListComponent implements OnInit {
     this.monthCount() === 1 ? 'home.headline.one' : 'home.headline.other'
   );
 
+  private readonly scroller = viewChild<ElementRef<HTMLElement>>('scroller');
+  private readonly viewport = viewChild(CdkVirtualScrollViewport);
+  private restoreOffset = 0;
+
+  ionViewWillLeave(): void {
+    this.restoreOffset = this.scroller()?.nativeElement.scrollTop ?? 0;
+  }
+
+  ionViewDidEnter(): void {
+    const scroller = this.scroller()?.nativeElement;
+
+    if (!scroller) return;
+
+    this.viewport()?.checkViewportSize();
+    scroller.scrollTop = this.restoreOffset;
+  }
+
   ngOnInit(): void {
     this.store.dispatch(TaskActions.loadTasks());
     this.store.dispatch(CategoryActions.loadCategories());
+  }
+
+  trackById(_index: number, task: ITask): string {
+    return task.id;
   }
 
   categoryOf(task: ITask): ICategory | null {

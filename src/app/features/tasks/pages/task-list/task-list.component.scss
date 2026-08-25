@@ -1,8 +1,4 @@
-ion-content {
-  --padding-start: 24px;
-  --padding-end: 24px;
-  --padding-bottom: 140px;
-}
+
 
 .round-button {
   --background: var(--ion-color-light);
@@ -105,7 +101,6 @@ ion-content {
   font-weight: 600;
 }
 
-/* Carrusel horizontal: las tarjetas del día se recorren de lado, como el mockup. */
 .carousel {
   display: flex;
   gap: 14px;
@@ -151,4 +146,49 @@ ion-content {
   height: 52px;
   font-weight: 700;
   z-index: 10;
+}
+
+.scroller {
+  height: 100%;
+  overflow-y: auto;
+  padding: 0 24px 140px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.virtual-list {
+  --card-height: 124px;
+  --row-height: 136px;
+  --skeleton: rgba(0, 0, 0, 0.06);
+
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--skeleton) 0,
+    var(--skeleton) var(--card-height),
+    transparent var(--card-height),
+    transparent var(--row-height)
+  );
+}
+
+.virtual-list app-task-card {
+  height: var(--card-height);
+  background: var(--ion-background-color, #fff);
+}
+
+:host-context(.ion-palette-dark) .virtual-list {
+  --skeleton: rgba(255, 255, 255, 0.09);
+}
+
+:host ::ng-deep .virtual-list .card {
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+:host ::ng-deep .virtual-list .card__title,
+:host ::ng-deep .virtual-list .card__description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
