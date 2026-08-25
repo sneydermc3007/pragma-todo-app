@@ -7,6 +7,8 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-08-25
+
 ### Fixed
 
 - Los mensajes de lista vacía distinguen entre no tener tareas creadas y que el filtro no encuentre ninguna.
