@@ -7,6 +7,8 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-08-25
+
 ### Added
 
 - Pruebas unitarias de los reducers, los selectores y los validadores de la app.
@@ -117,7 +119,8 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 - Validación del formulario de tareas: título obligatorio —rechaza los valores de solo espacios— y límites de longitud en título y descripción.
 - Lista de tareas ordenada por fecha de creación descendente, con estado vacío y mensajes de error.
 
-[Unreleased]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.4.0...v0.5.0
