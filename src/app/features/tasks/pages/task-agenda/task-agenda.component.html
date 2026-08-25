@@ -37,7 +37,9 @@
             class="timeline__card"
             [task]="task"
             variant="soft"
+            [category]="categoryOf(task)"
             (toggled)="toggle($event)"
+            (edited)="openForm($event)"
             (removed)="remove($event)" />
         </li>
       }

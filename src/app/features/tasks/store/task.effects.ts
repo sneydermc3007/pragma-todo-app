@@ -7,6 +7,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, filter, map, of, switchMap } from 'rxjs';
 
 import { TaskActions } from './task.actions';
+import { CategoryActions } from '../../categories/store/category.actions';
 import { selectAllTasks, selectTaskById } from './task.selectors';
 
 import type { ITask } from '../models/task.model';
@@ -79,6 +80,29 @@ export class TaskEffects {
                 catchError((error: Error) => of(TaskActions.deleteTaskFailure({ error: error.message })))
             )
         )
+    ));
+
+    unassignDeletedCategory$ = createEffect(() => this.actions$.pipe(
+        ofType(CategoryActions.deleteCategorySuccess),
+        concatLatestFrom(() => this.store.select(selectAllTasks)),
+        filter(([{ id }, tasks]) => tasks.some((task) => task.categoryId === id)),
+        concatMap(([{ id }, tasks]) => {
+            const now = new Date().toISOString();
+
+            const unassigned = tasks
+                .filter((task) => task.categoryId === id)
+                .map((task) => ({ ...task, categoryId: null, updatedAt: now }));
+
+            const next = tasks.map(
+                (task) => unassigned.find((updated) => updated.id === task.id) ?? task
+            );
+
+            return this.taskService.saveAll(next).pipe(
+                map(() => TaskActions.unassignCategorySuccess({ tasks: unassigned })),
+                catchError((error: Error) =>
+                    of(TaskActions.unassignCategoryFailure({ error: error.message })))
+            );
+        })
     ));
 
     toggleTask$ = createEffect(() => this.actions$.pipe(

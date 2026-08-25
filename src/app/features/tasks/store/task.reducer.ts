@@ -9,6 +9,7 @@ export interface ITaskState extends EntityState<ITask> {
     loading: boolean;
     error: string | null;
     searchTerm: string;
+    activeCategoryId: string | null;
 }
 
 export const taskAdapter: EntityAdapter<ITask> = createEntityAdapter<ITask>({
@@ -18,7 +19,8 @@ export const taskAdapter: EntityAdapter<ITask> = createEntityAdapter<ITask>({
 export const initialState: ITaskState = taskAdapter.getInitialState({
     loading: false,
     error: null,
-    searchTerm: ''
+    searchTerm: '',
+    activeCategoryId: null
 });
 
 export const taskReducer = createReducer(
@@ -57,5 +59,9 @@ export const taskReducer = createReducer(
     on(TaskActions.deleteTaskFailure, (state, { error }) => ({ ...state, loading: false, error })),
 
     // Búsqueda
-    on(TaskActions.setSearchTerm, (state, { term }) => ({ ...state, searchTerm: term }))
+    on(TaskActions.setSearchTerm, (state, { term }) => ({ ...state, searchTerm: term })),
+    on(TaskActions.setActiveCategory, (state, { categoryId }) => ({ ...state, activeCategoryId: categoryId })),
+
+    on(TaskActions.unassignCategorySuccess, (state, { tasks }) => taskAdapter.upsertMany(tasks, state)),
+    on(TaskActions.unassignCategoryFailure, (state, { error }) => ({ ...state, error }))
 );

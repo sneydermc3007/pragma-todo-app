@@ -7,6 +7,19 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+### Added
+
+- Categorías con nombre y color: crear, editar y eliminar desde su propia pantalla.
+- Asignación de una categoría a cada tarea, al crearla o al editarla, siempre opcional.
+- Filtro de tareas por categoría, con un chip por cada una y su contador, combinable con el buscador.
+- Filtro «Sin categoría», para encontrar las tareas que quedaron sueltas.
+- Edición de una tarea ya creada.
+
+### Changed
+
+- Al eliminar una categoría, las tareas que la usaban quedan sin categoría en lugar de borrarse o romperse.
+- Las tareas guardadas con la versión anterior quedan sin categoría, sin perder datos.
+
 ## [0.2.1] - 2026-08-24
 
 ### Fixed

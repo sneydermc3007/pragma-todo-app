@@ -40,6 +40,43 @@ ion-content {
   margin-bottom: 26px;
 }
 
+.chips {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  margin: 0 -24px 26px;
+  padding: 2px 24px 6px;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar { display: none; }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  padding: 9px 15px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ion-color-light);
+  color: var(--ion-color-medium-shade);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &.selected {
+    background: var(--ion-color-primary);
+    color: #fff;
+  }
+}
+
+.chip__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
 .section {
   margin-bottom: 28px;
 }
