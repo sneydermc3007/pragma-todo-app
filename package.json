@@ -9,7 +9,14 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "build:android": "ng build && cordova build android",
+    "build:ios": "ng build && cordova build ios",
+    "build:android:release": "ng build --configuration production && cordova build android --release",
+    "run:android": "ng build && cordova run android --device",
+    "run:ios": "ng build && cordova run ios --device",
+    "emulate:android": "ng build && cordova emulate android",
+    "emulate:ios": "ng build && cordova emulate ios"
   },
   "private": true,
   "dependencies": {
@@ -41,6 +48,13 @@
     "@angular/language-service": "21.2.21",
     "@ionic/angular-toolkit": "^13.0.0",
     "angular-eslint": "21.0.0",
+    "cordova-android": "^15.1.0",
+    "cordova-ios": "^8.1.1",
+    "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-ionic-keyboard": "^2.0.5",
+    "cordova-plugin-ionic-webview": "^5.0.0",
+    "cordova-plugin-splashscreen": "5.0.2",
+    "cordova-plugin-statusbar": "^2.4.2",
     "cordova-sqlite-storage": "^7.0.0",
     "eslint": "^9.16.0",
     "jsdom": "^26.0.0",
@@ -51,7 +65,16 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-sqlite-storage": {}
-    }
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-keyboard": {}
+    },
+    "platforms": [
+      "android",
+      "ios"
+    ]
   }
 }
