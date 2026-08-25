@@ -1,6 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Nueva tarea</ion-title>
+    <ion-title>{{ isEditing ? 'Editar tarea' : 'Nueva tarea' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cancel()">Cancelar</ion-button>
     </ion-buttons>
@@ -37,6 +37,16 @@
     </ion-item>
 
     <ion-item>
+      <ion-select label="Categoría" labelPlacement="stacked" formControlName="categoryId"
+                  placeholder="Sin categoría">
+        <ion-select-option [value]="''">Sin categoría</ion-select-option>
+        @for (category of categories(); track category.id) {
+          <ion-select-option [value]="category.id">{{ category.name }}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
       <ion-input label="Día" labelPlacement="stacked" type="date" formControlName="scheduledDate" />
     </ion-item>
 
@@ -53,7 +63,7 @@
     }
 
     <ion-button type="submit" expand="block" class="submit" [disabled]="form.invalid">
-      Agregar tarea
+      {{ isEditing ? 'Guardar cambios' : 'Agregar tarea' }}
     </ion-button>
   </form>
 </ion-content>
