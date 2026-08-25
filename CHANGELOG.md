@@ -7,6 +7,20 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-08-25
+
+### Added
+
+- El formato de hora se adapta a la región: 24 horas en Europa y 12 horas en el resto, decidido desde Firebase sin publicar una versión nueva.
+- Confirmación antes de eliminar una tarea, con el nombre de la tarea en el aviso.
+- Avisos al crear, editar y eliminar una tarea.
+
+### Changed
+
+- Al crear una tarea, las horas vienen propuestas —la próxima hora en punto y una hora de duración— en lugar de quedar vacías.
+- El selector de hora del formulario respeta el mismo formato que muestran las tarjetas.
+- La última tarea de la lista ya no queda tapada por el botón de agregar.
+
 ## [0.5.0] - 2026-08-25
 
 ### Added
