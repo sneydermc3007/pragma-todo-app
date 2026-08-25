@@ -109,6 +109,7 @@
   margin: 0 -24px;
   padding-inline: 24px;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: 24px;
   -webkit-overflow-scrolling: touch;
 
   &::-webkit-scrollbar { display: none; }
