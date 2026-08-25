@@ -46,6 +46,10 @@ export class TaskListComponent implements OnInit {
 
   readonly uncategorizedCount = computed(() => this.taskCounts()[UNCATEGORIZED] ?? 0);
 
+  readonly hasActiveFilters = computed(
+    () => this.searchTerm().trim().length > 0 || this.activeCategoryId() !== null
+  );
+
   private readonly hour = signal(new Date().getHours());
 
   readonly greeting = computed(() => {

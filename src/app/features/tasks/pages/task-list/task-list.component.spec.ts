@@ -89,6 +89,33 @@ describe('TaskListComponent', () => {
     });
   });
 
+  describe('hasActiveFilters', () => {
+    it('es falso sin término ni categoría', () => {
+      expect(component.hasActiveFilters()).toBe(false);
+    });
+
+    it('es verdadero con un término escrito', () => {
+      store.overrideSelector(selectSearchTerm, 'café');
+      store.refreshState();
+
+      expect(component.hasActiveFilters()).toBe(true);
+    });
+
+    it('ignora un término de solo espacios', () => {
+      store.overrideSelector(selectSearchTerm, '   ');
+      store.refreshState();
+
+      expect(component.hasActiveFilters()).toBe(false);
+    });
+
+    it('es verdadero con una categoría activa', () => {
+      store.overrideSelector(selectActiveCategoryId, 'cat-1');
+      store.refreshState();
+
+      expect(component.hasActiveFilters()).toBe(true);
+    });
+  });
+
   describe('búsqueda', () => {
     it('despacha setSearchTerm con el término escrito', () => {
       component.search('café');

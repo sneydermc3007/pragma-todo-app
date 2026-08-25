@@ -7,6 +7,11 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Los mensajes de lista vacía distinguen entre no tener tareas creadas y que el filtro no encuentre ninguna.
+- El contador del encabezado usa el singular cuando hay una sola tarea.
+
 ## [0.3.0] - 2026-08-25
 
 ### Added
