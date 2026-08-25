@@ -15,12 +15,17 @@ import { AppComponent } from './app/app.component';
 
 import { routes } from './app/app.routes';
 import { registerAppIcons } from './app/core/icons';
+import { initializeFirebase } from './app/core/firebase';
+import { REMOTE_CONFIG_FEATURE_KEY } from './app/features/remote-config/models/remote-config.const';
+import { remoteConfigReducer } from './app/features/remote-config/store/remote-config.reducer';
+import { RemoteConfigEffects } from './app/features/remote-config/store/remote-config.effects';
 import { CATEGORIES_FEATURE_KEY } from './app/features/categories/models/category.const';
 import { categoryReducer } from './app/features/categories/store/category.reducer';
 import { CategoryEffects } from './app/features/categories/store/category.effects';
 
 
 registerAppIcons();
+initializeFirebase();
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -31,6 +36,8 @@ bootstrapApplication(AppComponent, {
     }),
     provideState({ name: CATEGORIES_FEATURE_KEY, reducer: categoryReducer }),
     provideEffects(CategoryEffects),
+    provideState({ name: REMOTE_CONFIG_FEATURE_KEY, reducer: remoteConfigReducer }),
+    provideEffects(RemoteConfigEffects),
     provideStoreDevtools({ maxAge: 25 }),
     provideIonicAngular({ useSetInputAPI: true }),
     importProvidersFrom(IonicStorageModule.forRoot({

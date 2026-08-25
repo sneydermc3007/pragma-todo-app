@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import { RemoteConfigActions } from './features/remote-config/store/remote-config.actions';
+import { selectDarkModeEnabled } from './features/remote-config/store/remote-config.selectors';
 
 import { 
   IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList,
@@ -16,7 +20,21 @@ import {
     IonMenuToggle, IonRouterOutlet
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  private store = inject(Store);
+
+  private readonly darkModeEnabled = this.store.selectSignal(selectDarkModeEnabled);
+
+  constructor() {
+    effect(() => {
+      document.documentElement.classList.toggle('ion-palette-dark', this.darkModeEnabled());
+    });
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(RemoteConfigActions.loadFlags());
+  }
+
   readonly sections = [
     { path: '/tasks', label: 'Tareas', icon: 'checkbox-outline' },
     { path: '/tasks/agenda', label: 'Agenda', icon: 'calendar-outline' },
