@@ -7,6 +7,16 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-08-25
+
+### Added
+
+- Modo oscuro como feature flag: se activa o desactiva desde Firebase Remote Config, sin publicar una versión nueva de la app.
+
+### Changed
+
+- El tema dejó de seguir la preferencia del sistema operativo y ahora lo controla el feature flag.
+
 ## [0.3.1] - 2026-08-25
 
 ### Fixed
