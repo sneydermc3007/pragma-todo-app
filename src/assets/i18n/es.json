@@ -1,0 +1,115 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "save": "Guardar cambios",
+    "task": "tarea",
+    "tasks": "tareas",
+    "noCategory": "Sin categoría"
+  },
+  "menu": {
+    "title": "Menú",
+    "tasks": "Tareas",
+    "agenda": "Agenda",
+    "alerts": "Avisos",
+    "categories": "Categorías"
+  },
+  "greeting": {
+    "morning": "Buenos días",
+    "afternoon": "Buenas tardes",
+    "evening": "Buenas noches"
+  },
+  "home": {
+    "headline": {
+      "one": "Tenés <span class=\"accent\">{{count}} tarea</span> este mes 👍",
+      "other": "Tenés <span class=\"accent\">{{count}} tareas</span> este mes 👍"
+    },
+    "search": "Buscar una tarea…",
+    "filterAll": "Todas",
+    "filterLabel": "Filtrar por categoría",
+    "todayTitle": "Tareas de hoy",
+    "seeAll": "Ver todas",
+    "todayEmpty": "No tenés nada agendado para hoy. Disfrutá 🎉",
+    "todayEmptyFiltered": "Ninguna tarea de hoy coincide con el filtro.",
+    "allTitle": "Todas las tareas",
+    "allEmpty": "Todavía no tenés tareas. Creá la primera con el botón de abajo.",
+    "allEmptyFiltered": "Ninguna tarea coincide con el filtro.",
+    "addTask": "Agregar tarea",
+    "alertsLabel": "Avisos"
+  },
+  "agenda": {
+    "weekLabel": "Semana actual",
+    "empty": "No hay tareas para este día.",
+    "addTask": "Agregar tarea"
+  },
+  "alerts": {
+    "title": "Avisos",
+    "overdue": "Vencidas",
+    "overdueEmpty": "Nada vencido. Vas al día 👌",
+    "upcoming": "Próximas",
+    "upcomingEmpty": "No tenés tareas pendientes agendadas."
+  },
+  "card": {
+    "completed": "Completada",
+    "pending": "Pendiente",
+    "edited": "· editada",
+    "editAria": "Editar {{title}}",
+    "deleteAria": "Eliminar {{title}}"
+  },
+  "priority": {
+    "HIGH": "Alta",
+    "MEDIUM": "Media",
+    "LOW": "Baja"
+  },
+  "taskForm": {
+    "newTitle": "Nueva tarea",
+    "editTitle": "Editar tarea",
+    "title": "Tarea",
+    "titlePlaceholder": "¿Qué hay que hacer?",
+    "description": "Descripción (opcional)",
+    "descriptionPlaceholder": "Algún detalle",
+    "priority": "Prioridad",
+    "category": "Categoría",
+    "day": "Día",
+    "start": "Inicio",
+    "end": "Fin",
+    "submitNew": "Agregar tarea",
+    "errors": {
+      "titleRequired": "El título es obligatorio.",
+      "titleMax": "Máximo 120 caracteres.",
+      "descriptionMax": "Máximo 500 caracteres.",
+      "timeRange": "La hora de fin tiene que ser posterior a la de inicio."
+    }
+  },
+  "categories": {
+    "title": "Categorías",
+    "empty": "Todavía no tenés categorías.",
+    "emptyHint": "Creá la primera para organizar tus tareas por tema.",
+    "add": "Nueva categoría",
+    "count": {
+      "one": "{{count}} tarea",
+      "other": "{{count}} tareas"
+    },
+    "deleteHeader": "Eliminar «{{name}}»",
+    "deleteImpact": {
+      "one": "{{count}} tarea va a quedar sin categoría. Las tareas no se borran.",
+      "other": "{{count}} tareas van a quedar sin categoría. Las tareas no se borran."
+    },
+    "deleteNoImpact": "Ninguna tarea usa esta categoría."
+  },
+  "categoryForm": {
+    "newTitle": "Nueva categoría",
+    "editTitle": "Editar categoría",
+    "name": "Nombre",
+    "namePlaceholder": "Trabajo, Personal, Compras…",
+    "color": "Color",
+    "colorAria": "Color {{color}}",
+    "submitNew": "Crear categoría",
+    "errors": {
+      "nameRequired": "El nombre es obligatorio.",
+      "nameTaken": "Ya existe una categoría con ese nombre.",
+      "nameMax": "Máximo 40 caracteres."
+    }
+  }
+}

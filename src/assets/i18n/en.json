@@ -1,0 +1,115 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save changes",
+    "task": "task",
+    "tasks": "tasks",
+    "noCategory": "No category"
+  },
+  "menu": {
+    "title": "Menu",
+    "tasks": "Tasks",
+    "agenda": "Agenda",
+    "alerts": "Alerts",
+    "categories": "Categories"
+  },
+  "greeting": {
+    "morning": "Good morning",
+    "afternoon": "Good afternoon",
+    "evening": "Good evening"
+  },
+  "home": {
+    "headline": {
+      "one": "You have <span class=\"accent\">{{count}} task</span> this month 👍",
+      "other": "You have <span class=\"accent\">{{count}} tasks</span> this month 👍"
+    },
+    "search": "Search a task…",
+    "filterAll": "All",
+    "filterLabel": "Filter by category",
+    "todayTitle": "Today's tasks",
+    "seeAll": "See all",
+    "todayEmpty": "Nothing scheduled for today. Enjoy 🎉",
+    "todayEmptyFiltered": "No task for today matches the filter.",
+    "allTitle": "All tasks",
+    "allEmpty": "You have no tasks yet. Create the first one with the button below.",
+    "allEmptyFiltered": "No task matches the filter.",
+    "addTask": "Add task",
+    "alertsLabel": "Alerts"
+  },
+  "agenda": {
+    "weekLabel": "Current week",
+    "empty": "No tasks for this day.",
+    "addTask": "Add task"
+  },
+  "alerts": {
+    "title": "Alerts",
+    "overdue": "Overdue",
+    "overdueEmpty": "Nothing overdue. You're on track 👌",
+    "upcoming": "Upcoming",
+    "upcomingEmpty": "You have no scheduled pending tasks."
+  },
+  "card": {
+    "completed": "Completed",
+    "pending": "Pending",
+    "edited": "· edited",
+    "editAria": "Edit {{title}}",
+    "deleteAria": "Delete {{title}}"
+  },
+  "priority": {
+    "HIGH": "High",
+    "MEDIUM": "Medium",
+    "LOW": "Low"
+  },
+  "taskForm": {
+    "newTitle": "New task",
+    "editTitle": "Edit task",
+    "title": "Task",
+    "titlePlaceholder": "What needs doing?",
+    "description": "Description (optional)",
+    "descriptionPlaceholder": "Some detail",
+    "priority": "Priority",
+    "category": "Category",
+    "day": "Day",
+    "start": "Start",
+    "end": "End",
+    "submitNew": "Add task",
+    "errors": {
+      "titleRequired": "The title is required.",
+      "titleMax": "120 characters maximum.",
+      "descriptionMax": "500 characters maximum.",
+      "timeRange": "The end time must be later than the start time."
+    }
+  },
+  "categories": {
+    "title": "Categories",
+    "empty": "You have no categories yet.",
+    "emptyHint": "Create the first one to organise your tasks by topic.",
+    "add": "New category",
+    "count": {
+      "one": "{{count}} task",
+      "other": "{{count}} tasks"
+    },
+    "deleteHeader": "Delete “{{name}}”",
+    "deleteImpact": {
+      "one": "{{count}} task will be left without a category. Tasks are not deleted.",
+      "other": "{{count}} tasks will be left without a category. Tasks are not deleted."
+    },
+    "deleteNoImpact": "No task uses this category."
+  },
+  "categoryForm": {
+    "newTitle": "New category",
+    "editTitle": "Edit category",
+    "name": "Name",
+    "namePlaceholder": "Work, Personal, Shopping…",
+    "color": "Color",
+    "colorAria": "Color {{color}}",
+    "submitNew": "Create category",
+    "errors": {
+      "nameRequired": "The name is required.",
+      "nameTaken": "A category with that name already exists.",
+      "nameMax": "40 characters maximum."
+    }
+  }
+}

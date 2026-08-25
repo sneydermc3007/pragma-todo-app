@@ -7,6 +7,11 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+### Added
+
+- La app se muestra en español o en inglés según el idioma configurado en el dispositivo, sin que haya que elegirlo a mano.
+- Las fechas y los nombres de los días de la agenda siguen el formato del idioma detectado.
+
 ## [0.4.0] - 2026-08-25
 
 ### Added
