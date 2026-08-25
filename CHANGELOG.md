@@ -7,6 +7,19 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-08-25
+
+### Changed
+
+- La lista de tareas ya no dibuja todas las tarjetas a la vez: solo las visibles, reciclándolas al hacer scroll. Con 1000 tareas pasa de 1033 tarjetas en pantalla a 47, y de 48 MB de memoria a 14 MB.
+- Las tarjetas de la lista tienen todas la misma altura, con el título y la descripción recortados a una línea.
+- Al hacer scroll muy rápido, los huecos que alcanzan a quedar sin dibujar muestran una silueta gris en lugar de espacio en blanco.
+
+### Fixed
+
+- Volver a la lista desde otra pantalla ya no salta al final de las tareas: conserva la posición donde estabas.
+- La primera tarjeta de «Tareas de hoy» ya no queda pegada al borde: arranca alineada con el resto de la pantalla.
+
 ## [0.6.0] - 2026-08-25
 
 ### Added
@@ -93,6 +106,13 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 - Validación del formulario de tareas: título obligatorio —rechaza los valores de solo espacios— y límites de longitud en título y descripción.
 - Lista de tareas ordenada por fecha de creación descendente, con estado vacío y mensajes de error.
 
-[Unreleased]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.2.0...HEAD
-[0.2.0]: https://github.com/sneydermc3007/pragma-todo-app/releases/tag/v0.2.0
+[Unreleased]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.3.1...v0.4.0
+[0.3.1]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.2.1...v0.3.0
+[0.2.1]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.2.0...v0.2.1
+[0.2.0]: https://github.com/sneydermc3007/pragma-todo-app/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/sneydermc3007/pragma-todo-app/releases/tag/v0.1.0
