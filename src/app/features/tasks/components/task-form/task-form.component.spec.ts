@@ -75,6 +75,7 @@ describe('TaskFormComponent', () => {
   describe('submit', () => {
     it('cierra el modal con el payload trimeado y las horas en null si están vacías', () => {
       component.form.patchValue({
+        categoryId: '',
         title: '  Comprar café  ',
         description: '  del bueno  ',
         priority: ETaskPriority.HIGH,
@@ -90,10 +91,33 @@ describe('TaskFormComponent', () => {
           title: 'Comprar café',
           description: 'del bueno',
           priority: ETaskPriority.HIGH,
+          categoryId: null,
           scheduledDate: '2026-08-25',
           startTime: null,
           endTime: null,
         },
+        'confirm'
+      );
+    });
+
+    it('manda categoryId en null cuando se elige «Sin categoría»', () => {
+      component.form.patchValue({ title: 'Sin categoría', categoryId: '' });
+
+      component.submit();
+
+      expect(modalCtrl.dismiss).toHaveBeenCalledWith(
+        expect.objectContaining({ categoryId: null }),
+        'confirm'
+      );
+    });
+
+    it('manda el id de la categoría elegida', () => {
+      component.form.patchValue({ title: 'Con categoría', categoryId: 'cat-1' });
+
+      component.submit();
+
+      expect(modalCtrl.dismiss).toHaveBeenCalledWith(
+        expect.objectContaining({ categoryId: 'cat-1' }),
         'confirm'
       );
     });

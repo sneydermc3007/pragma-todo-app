@@ -6,6 +6,7 @@ export interface ITask {
     description: string | null;
     priority: ETaskPriority;
     completed: boolean;
+    categoryId: string | null;
     scheduledDate: string;
     startTime: string | null;
     endTime: string | null;
@@ -15,13 +16,13 @@ export interface ITask {
 
 export type TAddTaskPayload = Pick<
     ITask,
-    'title' | 'description' | 'priority' | 'scheduledDate' | 'startTime' | 'endTime'
+    'title' | 'description' | 'priority' | 'categoryId' | 'scheduledDate' | 'startTime' | 'endTime'
 >;
 
 export type TUpdateTaskPayload = {
     id: string;
     changes: Partial<Pick<
         ITask,
-        'title' | 'description' | 'priority' | 'completed' | 'scheduledDate' | 'startTime' | 'endTime'
+        'title' | 'description' | 'priority' | 'completed' | 'categoryId' | 'scheduledDate' | 'startTime' | 'endTime'
     >>;
 };

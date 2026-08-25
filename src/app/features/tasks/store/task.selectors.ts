@@ -21,23 +21,46 @@ export const selectError = createSelector(selectTaskState, (state) => state.erro
 
 export const selectSearchTerm = createSelector(selectTaskState, (state) => state.searchTerm);
 
+export const selectActiveCategoryId = createSelector(selectTaskState, (state) => state.activeCategoryId);
+
 export const selectTaskById = (id: string) =>
     createSelector(selectTaskEntities, (entities) => entities[id]);
+
+export const UNCATEGORIZED = '__none__';
 
 export const selectVisibleTasks = createSelector(
     selectAllTasks,
     selectSearchTerm,
-    (tasks, term) => {
+    selectActiveCategoryId,
+    (tasks, term, categoryId) => {
         const needle = term.trim().toLowerCase();
-        if (!needle) return tasks;
 
-        return tasks.filter(
-            (task) =>
+        return tasks.filter((task) => {
+            const matchesTerm =
+                !needle ||
                 task.title.toLowerCase().includes(needle) ||
-                (task.description?.toLowerCase().includes(needle) ?? false)
-        );
+                (task.description?.toLowerCase().includes(needle) ?? false);
+
+            const matchesCategory =
+                categoryId === null ||
+                (categoryId === UNCATEGORIZED ? task.categoryId === null : task.categoryId === categoryId);
+
+            return matchesTerm && matchesCategory;
+        });
     }
 );
+
+export const selectTaskCountByCategory = createSelector(selectAllTasks, (tasks) =>
+    tasks.reduce<Record<string, number>>((counts, task) => {
+        const key = task.categoryId ?? UNCATEGORIZED;
+        counts[key] = (counts[key] ?? 0) + 1;
+
+        return counts;
+    }, {})
+);
+
+export const selectTasksByCategoryId = (categoryId: string) =>
+    createSelector(selectAllTasks, (tasks) => tasks.filter((task) => task.categoryId === categoryId));
 
 const byStartTime = (tasks: readonly ITask[]): ITask[] =>
     tasks.slice().sort((a, b) => (a.startTime ?? '99:99').localeCompare(b.startTime ?? '99:99'));

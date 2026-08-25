@@ -21,5 +21,6 @@ export class AppComponent {
     { path: '/tasks', label: 'Tareas', icon: 'checkbox-outline' },
     { path: '/tasks/agenda', label: 'Agenda', icon: 'calendar-outline' },
     { path: '/tasks/alerts', label: 'Avisos', icon: 'notifications-outline' },
+    { path: '/categories', label: 'Categorías', icon: 'pricetags-outline' },
   ];
 }

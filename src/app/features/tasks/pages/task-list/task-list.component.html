@@ -25,6 +25,31 @@
     [value]="searchTerm()"
     (ionInput)="search($any($event).detail.value)" />
 
+  @if (categories().length || uncategorizedCount()) {
+    <nav class="chips" aria-label="Filtrar por categoría">
+      <button type="button" class="chip" [class.selected]="activeCategoryId() === null"
+              (click)="filterBy(null)">Todas</button>
+
+      @for (category of categories(); track category.id) {
+        <button type="button" class="chip"
+                [class.selected]="activeCategoryId() === category.id"
+                [style.--chip]="category.color"
+                (click)="filterBy(category.id)">
+          <span class="chip__dot" [style.background]="category.color"></span>
+          {{ category.name }} · {{ countFor(category) }}
+        </button>
+      }
+
+      @if (uncategorizedCount()) {
+        <button type="button" class="chip"
+                [class.selected]="activeCategoryId() === uncategorized"
+                (click)="filterBy(uncategorized)">
+          Sin categoría · {{ uncategorizedCount() }}
+        </button>
+      }
+    </nav>
+  }
+
   @if (error(); as message) {
     <p class="error">{{ message }}</p>
   }
@@ -42,7 +67,9 @@
             class="carousel__item"
             [task]="task"
             variant="solid"
+            [category]="categoryOf(task)"
             (toggled)="toggle($event)"
+            (edited)="openForm($event)"
             (removed)="remove($event)" />
         }
       </div>
@@ -62,7 +89,9 @@
         [task]="task"
         variant="soft"
         [showDate]="true"
+        [category]="categoryOf(task)"
         (toggled)="toggle($event)"
+        (edited)="openForm($event)"
         (removed)="remove($event)" />
     } @empty {
       <p class="empty">No hay tareas que coincidan con la búsqueda.</p>

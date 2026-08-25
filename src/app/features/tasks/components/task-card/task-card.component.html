@@ -20,9 +20,23 @@
     </ion-checkbox>
 
     <span class="card__meta">
+      @if (category(); as tag) {
+        <span class="card__tag">
+          <span class="card__dot" [style.background]="tag.color"></span>{{ tag.name }}
+        </span>
+      }
       @if (showDate()) { <span>{{ task().scheduledDate }}</span> }
-      @if (edited()) { <span class="card__edited">· editada</span> }
+      @if (wasEdited()) { <span class="card__edited">· editada</span> }
     </span>
+
+    <ion-button
+      class="card__delete"
+      fill="clear"
+      size="small"
+      (click)="edited.emit(task())"
+      [attr.aria-label]="'Editar ' + task().title">
+      <ion-icon slot="icon-only" name="create-outline" />
+    </ion-button>
 
     <ion-button
       class="card__delete"

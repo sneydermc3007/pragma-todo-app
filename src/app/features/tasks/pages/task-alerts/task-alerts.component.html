@@ -13,7 +13,8 @@
 
     @for (task of overdue(); track task.id) {
       <app-task-card class="stacked" [task]="task" variant="soft" [showDate]="true"
-                     (toggled)="toggle($event)" />
+                     [category]="categoryOf(task)"
+                     (toggled)="toggle($event)" (edited)="openForm($event)" (removed)="remove($event)" />
     } @empty {
       <p class="empty">Nada vencido. Vas al día 👌</p>
     }
@@ -24,7 +25,8 @@
 
     @for (task of upcoming(); track task.id) {
       <app-task-card class="stacked" [task]="task" variant="soft" [showDate]="true"
-                     (toggled)="toggle($event)" />
+                     [category]="categoryOf(task)"
+                     (toggled)="toggle($event)" (edited)="openForm($event)" (removed)="remove($event)" />
     } @empty {
       <p class="empty">No tenés tareas pendientes agendadas.</p>
     }

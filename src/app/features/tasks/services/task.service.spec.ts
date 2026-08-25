@@ -29,6 +29,7 @@ describe('TaskService', () => {
         description: null,
         priority: ETaskPriority.HIGH,
         completed: false,
+        categoryId: null,
         scheduledDate: '2026-08-23',
         startTime: '10:00',
         endTime: '11:00',

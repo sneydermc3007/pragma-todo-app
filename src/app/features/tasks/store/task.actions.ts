@@ -23,6 +23,10 @@ export const TaskActions = createActionGroup({
 
         'Toggle Task': props<{ id: string }>(),
 
-        'Set Search Term': props<{ term: string }>()
+        'Unassign Category Success': props<{ tasks: ITask[] }>(),
+        'Unassign Category Failure': props<{ error: string }>(),
+
+        'Set Search Term': props<{ term: string }>(),
+        'Set Active Category': props<{ categoryId: string | null }>()
     }
 })

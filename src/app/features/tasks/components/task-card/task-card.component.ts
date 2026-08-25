@@ -4,6 +4,7 @@ import { IonButton, IonCheckbox, IonIcon } from '@ionic/angular';
 import { ETaskPriority } from '../../models/task.enum';
 import { formatTime } from '../../../../core/utils/date';
 import type { ITask } from '../../models/task.model';
+import type { ICategory } from '../../../categories/models/category.model';
 
 const PRIORITY_TONE: Record<ETaskPriority, string> = {
   [ETaskPriority.HIGH]: 'high',
@@ -23,9 +24,11 @@ export class TaskCardComponent {
   readonly task = input.required<ITask>();
   readonly variant = input<'solid' | 'soft'>('soft');
   readonly showDate = input(false);
+  readonly category = input<ICategory | null>(null);
 
   readonly toggled = output<string>();
   readonly removed = output<string>();
+  readonly edited = output<ITask>();
 
   readonly tone = computed(() => PRIORITY_TONE[this.task().priority]);
 
@@ -38,5 +41,5 @@ export class TaskCardComponent {
     return end ? `${start} – ${end}` : start;
   });
 
-  readonly edited = computed(() => this.task().updatedAt !== this.task().createdAt);
+  readonly wasEdited = computed(() => this.task().updatedAt !== this.task().createdAt);
 }

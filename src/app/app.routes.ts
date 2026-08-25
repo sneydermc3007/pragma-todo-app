@@ -6,6 +6,11 @@ export const routes: Routes = [
     loadChildren: () => import('./features/tasks/tasks.routes').then((m) => m.TASKS_ROUTES),
   },
   {
+    path: 'categories',
+    loadChildren: () =>
+      import('./features/categories/categories.routes').then((m) => m.CATEGORIES_ROUTES),
+  },
+  {
     path: '',
     redirectTo: 'tasks',
     pathMatch: 'full',

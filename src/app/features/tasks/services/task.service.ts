@@ -44,6 +44,7 @@ export class TaskService {
 
 const migrate = (task: ITask): ITask => ({
   ...task,
+  categoryId: task.categoryId ?? null,
   scheduledDate: task.scheduledDate ?? task.createdAt.slice(0, 10),
   startTime: task.startTime ?? null,
   endTime: task.endTime ?? null,

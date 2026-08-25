@@ -13,6 +13,7 @@ const task = (overrides: Partial<ITask> = {}): ITask => ({
   description: null,
   priority: ETaskPriority.MEDIUM,
   completed: false,
+  categoryId: null,
   scheduledDate: '2026-08-23',
   startTime: '14:00',
   endTime: '15:30',
@@ -77,13 +78,13 @@ describe('TaskCardComponent', () => {
 
   describe('edited', () => {
     it('es falso cuando la tarea nunca se modificó', () => {
-      expect(component.edited()).toBe(false);
+      expect(component.wasEdited()).toBe(false);
     });
 
     it('es verdadero cuando updatedAt difiere de createdAt', () => {
       fixture.componentRef.setInput('task', task({ updatedAt: '2026-08-23T18:00:00.000Z' }));
 
-      expect(component.edited()).toBe(true);
+      expect(component.wasEdited()).toBe(true);
     });
   });
 
@@ -95,6 +96,15 @@ describe('TaskCardComponent', () => {
       component.toggled.emit(component.task().id);
 
       expect(spy).toHaveBeenCalledWith('task-1');
+    });
+
+    it('edited emite la tarea completa', () => {
+      const spy = vi.fn();
+      component.edited.subscribe(spy);
+
+      component.edited.emit(component.task());
+
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ id: 'task-1' }));
     });
 
     it('removed emite el id de la tarea', () => {

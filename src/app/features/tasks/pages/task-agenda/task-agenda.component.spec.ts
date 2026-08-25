@@ -1,53 +1,42 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalController } from '@ionic/angular';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { TaskActions } from '../../store/task.actions';
 import { selectVisibleTasks } from '../../store/task.selectors';
+import { selectAllCategories, selectCategoryEntities } from '../../../categories/store/category.selectors';
+import { TaskFormService } from '../../services/task-form.service';
 
 import { TaskAgendaComponent } from './task-agenda.component';
 
-import { ETaskPriority } from '../../models/task.enum';
 
-import type { TAddTaskPayload } from '../../models/task.model';
 
 describe('TaskAgendaComponent', () => {
   let component: TaskAgendaComponent;
   let fixture: ComponentFixture<TaskAgendaComponent>;
   let store: MockStore;
   let dispatch: ReturnType<typeof vi.spyOn>;
-  let modalCtrl: { create: ReturnType<typeof vi.fn> };
-  let modal: { present: ReturnType<typeof vi.fn>; onWillDismiss: ReturnType<typeof vi.fn> };
-
-  const payload: TAddTaskPayload = {
-    title: 'Reunión',
-    description: null,
-    priority: ETaskPriority.HIGH,
-    scheduledDate: '2026-08-25',
-    startTime: '10:00',
-    endTime: '11:00',
-  };
+  let taskForm: { open: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     vi.setSystemTime(new Date(2026, 7, 17, 9, 0, 0));
 
-    modal = {
-      present: vi.fn().mockResolvedValue(undefined),
-      onWillDismiss: vi.fn().mockResolvedValue({ data: payload, role: 'confirm' }),
-    };
-    modalCtrl = { create: vi.fn().mockResolvedValue(modal) };
+    taskForm = { open: vi.fn().mockResolvedValue(undefined) };
 
     TestBed.configureTestingModule({
       imports: [TaskAgendaComponent],
       providers: [
         provideZonelessChangeDetection(),
-        { provide: ModalController, useValue: modalCtrl },
+        { provide: TaskFormService, useValue: taskForm },
         provideMockStore({
-          selectors: [{ selector: selectVisibleTasks, value: [] }],
+          selectors: [
+            { selector: selectVisibleTasks, value: [] },
+            { selector: selectAllCategories, value: [] },
+            { selector: selectCategoryEntities, value: {} },
+          ],
         }),
       ],
     });
@@ -113,22 +102,10 @@ describe('TaskAgendaComponent', () => {
   });
 
   describe('formulario', () => {
-    it('abre el sheet precargando el día que se está mirando', async () => {
-      await component.openForm();
+    it('abre el formulario precargando el día que se está mirando', () => {
+      component.openForm();
 
-      expect(modalCtrl.create).toHaveBeenCalledWith(
-        expect.objectContaining({ componentProps: { scheduledDate: '2026-08-17' } })
-      );
-      expect(dispatch).toHaveBeenCalledWith(TaskActions.addTask({ task: payload }));
-    });
-
-    it('no despacha nada si se cancela', async () => {
-      modal.onWillDismiss.mockResolvedValue({ data: null, role: 'cancel' });
-      dispatch.mockClear();
-
-      await component.openForm();
-
-      expect(dispatch).not.toHaveBeenCalled();
+      expect(taskForm.open).toHaveBeenCalledWith(null, component.selectedDate());
     });
   });
 

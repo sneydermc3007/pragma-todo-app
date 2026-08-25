@@ -1,15 +1,18 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon,
-         IonToolbar, ModalController } from '@ionic/angular';
+         IonToolbar } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 
 import { TaskCardComponent } from '../../components/task-card/task-card.component';
-import { TaskFormComponent } from '../../components/task-form/task-form.component';
 
 import { TaskActions } from '../../store/task.actions';
+import { TaskFormService } from '../../services/task-form.service';
 import { selectVisibleTasks, tasksOfDay } from '../../store/task.selectors';
+import { CategoryActions } from '../../../categories/store/category.actions';
+import { selectAllCategories, selectCategoryEntities } from '../../../categories/store/category.selectors';
 import { toDateKey, todayKey, weekOf } from '../../../../core/utils/date';
-import type { TAddTaskPayload } from '../../models/task.model';
+import type { ITask } from '../../models/task.model';
+import type { ICategory } from '../../../categories/models/category.model';
 
 const DAY_LABELS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
@@ -24,7 +27,7 @@ const DAY_LABELS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 })
 export class TaskAgendaComponent implements OnInit {
   private store = inject(Store);
-  private modalCtrl = inject(ModalController);
+  private taskForm = inject(TaskFormService);
 
   private readonly visibleTasks = this.store.selectSignal(selectVisibleTasks);
 
@@ -33,6 +36,9 @@ export class TaskAgendaComponent implements OnInit {
   readonly tasks = computed(() => tasksOfDay(this.visibleTasks(), this.selectedDate()));
 
   readonly today = todayKey();
+
+  readonly categories = this.store.selectSignal(selectAllCategories);
+  private readonly categoryEntities = this.store.selectSignal(selectCategoryEntities);
 
   readonly week = computed(() =>
     weekOf(new Date()).map((date) => ({
@@ -44,28 +50,19 @@ export class TaskAgendaComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(TaskActions.loadTasks());
+    this.store.dispatch(CategoryActions.loadCategories());
+  }
+
+  categoryOf(task: ITask): ICategory | null {
+    return task.categoryId ? this.categoryEntities()[task.categoryId] ?? null : null;
   }
 
   select(dateKey: string): void {
     this.selectedDate.set(dateKey);
   }
 
-  async openForm(): Promise<void> {
-    const modal = await this.modalCtrl.create({
-      component: TaskFormComponent,
-      componentProps: { scheduledDate: this.selectedDate() },
-      breakpoints: [0, 0.9],
-      initialBreakpoint: 0.9,
-      handle: true,
-    });
-
-    await modal.present();
-
-    const { data, role } = await modal.onWillDismiss<TAddTaskPayload>();
-
-    if (role === 'confirm' && data) {
-      this.store.dispatch(TaskActions.addTask({ task: data }));
-    }
+  openForm(task: ITask | null = null): void {
+    void this.taskForm.open(task, this.selectedDate());
   }
 
   toggle(id: string): void {
