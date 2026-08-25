@@ -4,6 +4,8 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { TaskActions } from '../../store/task.actions';
 import { selectOverdueTasks, selectUpcomingTasks } from '../../store/task.selectors';
+import { selectCategoryEntities } from '../../../categories/store/category.selectors';
+import { TaskFormService } from '../../services/task-form.service';
 
 import { TaskAlertsComponent } from './task-alerts.component';
 
@@ -17,6 +19,7 @@ const task = (overrides: Partial<ITask> = {}): ITask => ({
   description: null,
   priority: ETaskPriority.HIGH,
   completed: false,
+  categoryId: null,
   scheduledDate: '2020-01-01',
   startTime: null,
   endTime: null,
@@ -36,10 +39,12 @@ describe('TaskAlertsComponent', () => {
       imports: [TaskAlertsComponent],
       providers: [
         provideZonelessChangeDetection(),
+        { provide: TaskFormService, useValue: { open: vi.fn() } },
         provideMockStore({
           selectors: [
             { selector: selectOverdueTasks, value: [task()] },
             { selector: selectUpcomingTasks, value: [task({ id: 'task-2', scheduledDate: '2099-01-01' })] },
+            { selector: selectCategoryEntities, value: {} },
           ],
         }),
       ],

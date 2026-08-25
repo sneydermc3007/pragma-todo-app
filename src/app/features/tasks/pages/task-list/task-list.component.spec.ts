@@ -2,49 +2,34 @@ import { provideRouter } from '@angular/router';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalController } from '@ionic/angular';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 import { TaskActions } from '../../store/task.actions';
-import { selectError, selectMonthTaskCount, selectSearchTerm, selectTodayTasks, selectVisibleTasks } from '../../store/task.selectors';
+import { selectActiveCategoryId, selectError, selectMonthTaskCount, selectSearchTerm, selectTaskCountByCategory, selectTodayTasks, selectVisibleTasks } from '../../store/task.selectors';
+import { selectAllCategories, selectCategoryEntities } from '../../../categories/store/category.selectors';
+import { TaskFormService } from '../../services/task-form.service';
 
 import { TaskListComponent } from './task-list.component';
 
-import { ETaskPriority } from '../../models/task.enum';
 
-import type { TAddTaskPayload } from '../../models/task.model';
 
 describe('TaskListComponent', () => {
   let component: TaskListComponent;
   let fixture: ComponentFixture<TaskListComponent>;
   let store: MockStore;
   let dispatch: ReturnType<typeof vi.spyOn>;
-  let modalCtrl: { create: ReturnType<typeof vi.fn> };
-  let modal: { present: ReturnType<typeof vi.fn>; onWillDismiss: ReturnType<typeof vi.fn> };
-
-  const payload: TAddTaskPayload = {
-    title: 'Comprar café',
-    description: null,
-    priority: ETaskPriority.HIGH,
-    scheduledDate: '2026-08-23',
-    startTime: '10:00',
-    endTime: '11:00',
-  };
+  let taskForm: { open: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
-    modal = {
-      present: vi.fn().mockResolvedValue(undefined),
-      onWillDismiss: vi.fn().mockResolvedValue({ data: payload, role: 'confirm' }),
-    };
-    modalCtrl = { create: vi.fn().mockResolvedValue(modal) };
+    taskForm = { open: vi.fn().mockResolvedValue(undefined) };
 
     TestBed.configureTestingModule({
       imports: [TaskListComponent],
       providers: [
         provideZonelessChangeDetection(),
         provideRouter([]),
-        { provide: ModalController, useValue: modalCtrl },
+        { provide: TaskFormService, useValue: taskForm },
         provideMockStore({
           selectors: [
             { selector: selectVisibleTasks, value: [] },
@@ -52,6 +37,10 @@ describe('TaskListComponent', () => {
             { selector: selectMonthTaskCount, value: 0 },
             { selector: selectSearchTerm, value: '' },
             { selector: selectError, value: null },
+            { selector: selectActiveCategoryId, value: null },
+            { selector: selectTaskCountByCategory, value: {} },
+            { selector: selectAllCategories, value: [] },
+            { selector: selectCategoryEntities, value: {} },
           ],
         }),
       ],
@@ -114,22 +103,19 @@ describe('TaskListComponent', () => {
     });
   });
 
-  describe('formulario en modal', () => {
-    it('abre el sheet y despacha addTask con lo que devuelve', async () => {
-      await component.openForm();
+  describe('formulario', () => {
+    it('abre el formulario vacío para crear', () => {
+      component.openForm();
 
-      expect(modalCtrl.create).toHaveBeenCalledOnce();
-      expect(modal.present).toHaveBeenCalledOnce();
-      expect(dispatch).toHaveBeenCalledWith(TaskActions.addTask({ task: payload }));
+      expect(taskForm.open).toHaveBeenCalledWith(null);
     });
 
-    it('no despacha nada si el usuario cancela', async () => {
-      modal.onWillDismiss.mockResolvedValue({ data: null, role: 'cancel' });
-      dispatch.mockClear();
+    it('abre el formulario con la tarea para editar', () => {
+      const task = { id: 'task-1' } as never;
 
-      await component.openForm();
+      component.openForm(task);
 
-      expect(dispatch).not.toHaveBeenCalled();
+      expect(taskForm.open).toHaveBeenCalledWith(task);
     });
   });
 
