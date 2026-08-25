@@ -7,6 +7,8 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-08-25
+
 ### Added
 
 - La app se muestra en español o en inglés según el idioma configurado en el dispositivo, sin que haya que elegirlo a mano.
