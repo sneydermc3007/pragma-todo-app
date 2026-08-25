@@ -111,5 +111,14 @@
       "nameTaken": "A category with that name already exists.",
       "nameMax": "40 characters maximum."
     }
+  },
+  "taskDelete": {
+    "header": "Delete task",
+    "message": "“{{title}}” will be deleted. This cannot be undone."
+  },
+  "toast": {
+    "taskCreated": "Task created",
+    "taskUpdated": "Task updated",
+    "taskDeleted": "Task deleted"
   }
 }

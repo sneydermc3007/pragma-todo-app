@@ -11,6 +11,7 @@ export interface IRemoteConfigState extends IFeatureFlags {
 
 export const initialState: IRemoteConfigState = {
     darkModeEnabled: false,
+    use24hClock: false,
     loaded: false,
     error: null
 };

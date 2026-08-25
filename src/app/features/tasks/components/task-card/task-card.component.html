@@ -42,7 +42,7 @@
       class="card__delete"
       fill="clear"
       size="small"
-      (click)="removed.emit(task().id)"
+      (click)="removed.emit(task())"
       [attr.aria-label]="'card.deleteAria' | translate:{ title: task().title }">
       <ion-icon slot="icon-only" name="trash-outline" />
     </ion-button>

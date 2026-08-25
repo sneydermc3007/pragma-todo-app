@@ -66,6 +66,7 @@
             class="carousel__item"
             [task]="task"
             variant="solid"
+            [use24hClock]="use24hClock()"
             [category]="categoryOf(task)"
             (toggled)="toggle($event)"
             (edited)="openForm($event)"
@@ -90,7 +91,8 @@
         [task]="task"
         variant="soft"
         [showDate]="true"
-        [category]="categoryOf(task)"
+        [use24hClock]="use24hClock()"
+            [category]="categoryOf(task)"
         (toggled)="toggle($event)"
         (edited)="openForm($event)"
         (removed)="remove($event)" />

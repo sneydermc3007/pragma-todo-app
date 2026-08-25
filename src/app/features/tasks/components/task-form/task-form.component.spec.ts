@@ -32,6 +32,53 @@ describe('TaskFormComponent', () => {
     await fixture.whenStable();
   });
 
+  describe('valores por defecto al crear', () => {
+    it('propone un rango horario válido', () => {
+      const { startTime, endTime } = component.form.getRawValue();
+
+      expect(startTime).toMatch(/^\d{2}:00$/);
+      expect(endTime).toMatch(/^\d{2}:00$/);
+      expect(endTime > startTime).toBe(true);
+      expect(component.form.hasError('timeRange')).toBe(false);
+    });
+
+    it('el hourCycle sigue al feature flag', () => {
+      expect(component.hourCycle()).toBe('h12');
+
+      fixture.componentRef.setInput('use24hClock', true);
+
+      expect(component.hourCycle()).toBe('h23');
+    });
+  });
+
+  describe('setTime', () => {
+    it('normaliza lo que emite el picker a HH:mm', () => {
+      component.setTime('startTime', '08:15:00');
+
+      expect(component.form.controls.startTime.value).toBe('08:15');
+    });
+
+    it('vacía el control cuando el picker no devuelve una hora', () => {
+      component.setTime('endTime', null);
+
+      expect(component.form.controls.endTime.value).toBe('');
+    });
+  });
+
+  describe('timeValue', () => {
+    it('agrega los segundos que espera ion-datetime', () => {
+      component.form.controls.startTime.setValue('08:15');
+
+      expect(component.timeValue('startTime')).toBe('08:15:00');
+    });
+
+    it('devuelve null cuando no hay hora, para que el picker no muestre una falsa', () => {
+      component.form.controls.startTime.setValue('');
+
+      expect(component.timeValue('startTime')).toBeNull();
+    });
+  });
+
   it('preselecciona el día que le pasa quien lo abre', () => {
     expect(component.form.controls.scheduledDate.value).toBe('2026-08-25');
   });

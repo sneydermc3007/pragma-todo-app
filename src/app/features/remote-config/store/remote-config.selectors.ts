@@ -10,5 +10,8 @@ export const selectRemoteConfigState =
 export const selectDarkModeEnabled =
     createSelector(selectRemoteConfigState, (state) => state.darkModeEnabled);
 
+export const selectUse24hClock =
+    createSelector(selectRemoteConfigState, (state) => state.use24hClock);
+
 export const selectFlagsLoaded =
     createSelector(selectRemoteConfigState, (state) => state.loaded);

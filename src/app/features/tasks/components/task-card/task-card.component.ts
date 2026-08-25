@@ -26,16 +26,17 @@ export class TaskCardComponent {
   readonly variant = input<'solid' | 'soft'>('soft');
   readonly showDate = input(false);
   readonly category = input<ICategory | null>(null);
+  readonly use24hClock = input(false);
 
   readonly toggled = output<string>();
-  readonly removed = output<string>();
+  readonly removed = output<ITask>();
   readonly edited = output<ITask>();
 
   readonly tone = computed(() => PRIORITY_TONE[this.task().priority]);
 
   readonly schedule = computed(() => {
-    const start = formatTime(this.task().startTime);
-    const end = formatTime(this.task().endTime);
+    const start = formatTime(this.task().startTime, this.use24hClock());
+    const end = formatTime(this.task().endTime, this.use24hClock());
 
     if (!start) return null;
 

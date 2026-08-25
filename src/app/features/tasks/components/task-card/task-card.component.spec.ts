@@ -64,6 +64,19 @@ describe('TaskCardComponent', () => {
       expect(component.schedule()).toBe('2:00 PM');
     });
 
+    it('usa el formato de 24 horas cuando el flag está encendido', () => {
+      fixture.componentRef.setInput('use24hClock', true);
+
+      expect(component.schedule()).toBe('14:00 – 15:30');
+    });
+
+    it('vuelve a 12 horas cuando el flag se apaga', () => {
+      fixture.componentRef.setInput('use24hClock', true);
+      fixture.componentRef.setInput('use24hClock', false);
+
+      expect(component.schedule()).toBe('2:00 PM – 3:30 PM');
+    });
+
     it('devuelve null cuando la tarea no tiene horario', () => {
       fixture.componentRef.setInput('task', task({ startTime: null, endTime: null }));
 
@@ -108,13 +121,13 @@ describe('TaskCardComponent', () => {
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({ id: 'task-1' }));
     });
 
-    it('removed emite el id de la tarea', () => {
+    it('removed emite la tarea completa, para poder confirmar con su título', () => {
       const spy = vi.fn();
       component.removed.subscribe(spy);
 
-      component.removed.emit(component.task().id);
+      component.removed.emit(component.task());
 
-      expect(spy).toHaveBeenCalledWith('task-1');
+      expect(spy).toHaveBeenCalledWith(expect.objectContaining({ id: 'task-1', title: 'Comprar café' }));
     });
   });
 });

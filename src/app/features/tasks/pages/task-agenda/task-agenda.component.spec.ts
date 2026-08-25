@@ -8,7 +8,9 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { TaskActions } from '../../store/task.actions';
 import { selectVisibleTasks } from '../../store/task.selectors';
 import { selectAllCategories, selectCategoryEntities } from '../../../categories/store/category.selectors';
+import { selectUse24hClock } from '../../../remote-config/store/remote-config.selectors';
 import { TaskFormService } from '../../services/task-form.service';
+import { TaskFeedbackService } from '../../services/task-feedback.service';
 
 import { TaskAgendaComponent } from './task-agenda.component';
 
@@ -20,12 +22,17 @@ describe('TaskAgendaComponent', () => {
   let store: MockStore;
   let dispatch: ReturnType<typeof vi.spyOn>;
   let taskForm: { open: ReturnType<typeof vi.fn> };
+  let feedback: { confirmDelete: ReturnType<typeof vi.fn>; notify: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     vi.setSystemTime(new Date(2026, 7, 17, 9, 0, 0));
 
     taskForm = { open: vi.fn().mockResolvedValue(undefined) };
+    feedback = {
+      confirmDelete: vi.fn().mockResolvedValue(true),
+      notify: vi.fn().mockResolvedValue(undefined),
+    };
 
     TestBed.configureTestingModule({
       imports: [TaskAgendaComponent],
@@ -33,8 +40,10 @@ describe('TaskAgendaComponent', () => {
         provideZonelessChangeDetection(),
         provideTranslateService(),
         { provide: TaskFormService, useValue: taskForm },
+        { provide: TaskFeedbackService, useValue: feedback },
         provideMockStore({
           selectors: [
+            { selector: selectUse24hClock, value: false },
             { selector: selectVisibleTasks, value: [] },
             { selector: selectAllCategories, value: [] },
             { selector: selectCategoryEntities, value: {} },
@@ -119,11 +128,16 @@ describe('TaskAgendaComponent', () => {
     });
   });
 
-  it('toggle y remove despachan sus acciones', () => {
+  it('toggle despacha toggleTask', () => {
     component.toggle('task-1');
-    component.remove('task-2');
 
     expect(dispatch).toHaveBeenCalledWith(TaskActions.toggleTask({ id: 'task-1' }));
+  });
+
+  it('remove confirma antes de despachar deleteTask', async () => {
+    await component.remove({ id: 'task-2', title: 'Reunión' } as never);
+
+    expect(feedback.confirmDelete).toHaveBeenCalledWith('Reunión');
     expect(dispatch).toHaveBeenCalledWith(TaskActions.deleteTask({ id: 'task-2' }));
   });
 });

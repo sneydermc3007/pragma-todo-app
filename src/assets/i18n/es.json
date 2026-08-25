@@ -111,5 +111,14 @@
       "nameTaken": "Ya existe una categoría con ese nombre.",
       "nameMax": "Máximo 40 caracteres."
     }
+  },
+  "taskDelete": {
+    "header": "Eliminar tarea",
+    "message": "Se va a eliminar «{{title}}». No se puede deshacer."
+  },
+  "toast": {
+    "taskCreated": "Tarea creada",
+    "taskUpdated": "Tarea actualizada",
+    "taskDeleted": "Tarea eliminada"
   }
 }

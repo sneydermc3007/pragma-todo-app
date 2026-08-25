@@ -22,8 +22,9 @@ export const weekOf = (date: Date): Date[] => {
   });
 };
 
-export const formatTime = (time: string | null): string | null => {
+export const formatTime = (time: string | null, use24hClock = false): string | null => {
   if (!time) return null;
+  if (use24hClock) return time;
 
   const [rawHours, minutes] = time.split(':');
   const hours = Number(rawHours);
@@ -31,4 +32,19 @@ export const formatTime = (time: string | null): string | null => {
   const display = hours % 12 === 0 ? 12 : hours % 12;
 
   return `${display}:${minutes} ${period}`;
+};
+
+export const toHourMinute = (value: unknown): string => {
+  if (typeof value !== 'string') return '';
+
+  const match = value.match(/(\d{2}):(\d{2})/);
+
+  return match ? `${match[1]}:${match[2]}` : '';
+};
+
+export const defaultTimeRange = (now = new Date()): { start: string; end: string } => {
+  const startHour = Math.min(now.getHours() + 1, 22);
+  const pad = (hour: number): string => `${hour}`.padStart(2, '0');
+
+  return { start: `${pad(startHour)}:00`, end: `${pad(startHour + 1)}:00` };
 };

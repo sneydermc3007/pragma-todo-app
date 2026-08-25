@@ -1,4 +1,4 @@
-import { formatTime, monthKey, toDateKey, weekOf } from './date';
+import { defaultTimeRange, formatTime, monthKey, toDateKey, toHourMinute, weekOf } from './date';
 
 describe('utils/date', () => {
   describe('toDateKey', () => {
@@ -46,6 +46,60 @@ describe('utils/date', () => {
 
     it('devuelve null si no hay hora', () => {
       expect(formatTime(null)).toBeNull();
+    });
+
+    it('devuelve la hora tal cual en formato de 24 horas', () => {
+      expect(formatTime('14:30', true)).toBe('14:30');
+      expect(formatTime('09:05', true)).toBe('09:05');
+      expect(formatTime('00:15', true)).toBe('00:15');
+    });
+
+    it('sigue devolviendo null sin hora aunque sea 24 horas', () => {
+      expect(formatTime(null, true)).toBeNull();
+    });
+  });
+
+  describe('toHourMinute', () => {
+    it('acepta HH:mm tal cual', () => {
+      expect(toHourMinute('14:30')).toBe('14:30');
+    });
+
+    it('recorta los segundos', () => {
+      expect(toHourMinute('14:30:00')).toBe('14:30');
+    });
+
+    it('extrae la hora de un ISO completo', () => {
+      expect(toHourMinute('2026-08-25T09:05:00-05:00')).toBe('09:05');
+    });
+
+    it('devuelve vacío con nulos o basura', () => {
+      expect(toHourMinute(null)).toBe('');
+      expect(toHourMinute(undefined)).toBe('');
+      expect(toHourMinute('')).toBe('');
+      expect(toHourMinute(['14:30'])).toBe('');
+    });
+  });
+
+  describe('defaultTimeRange', () => {
+    it('propone la próxima hora en punto y una hora de duración', () => {
+      expect(defaultTimeRange(new Date(2026, 7, 25, 9, 17))).toEqual({ start: '10:00', end: '11:00' });
+    });
+
+    it('rellena con cero las horas de un dígito', () => {
+      expect(defaultTimeRange(new Date(2026, 7, 25, 6, 0))).toEqual({ start: '07:00', end: '08:00' });
+    });
+
+    it('no cruza la medianoche: al final del día se queda en 22:00 – 23:00', () => {
+      expect(defaultTimeRange(new Date(2026, 7, 25, 22, 40))).toEqual({ start: '22:00', end: '23:00' });
+      expect(defaultTimeRange(new Date(2026, 7, 25, 23, 59))).toEqual({ start: '22:00', end: '23:00' });
+    });
+
+    it('el rango que propone siempre es válido', () => {
+      for (let hour = 0; hour < 24; hour++) {
+        const { start, end } = defaultTimeRange(new Date(2026, 7, 25, hour, 0));
+
+        expect(end > start).toBe(true);
+      }
     });
   });
 });

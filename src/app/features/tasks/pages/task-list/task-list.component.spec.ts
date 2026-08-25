@@ -9,7 +9,9 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { TaskActions } from '../../store/task.actions';
 import { selectActiveCategoryId, selectError, selectMonthTaskCount, selectSearchTerm, selectTaskCountByCategory, selectTodayTasks, selectVisibleTasks } from '../../store/task.selectors';
 import { selectAllCategories, selectCategoryEntities } from '../../../categories/store/category.selectors';
+import { selectUse24hClock } from '../../../remote-config/store/remote-config.selectors';
 import { TaskFormService } from '../../services/task-form.service';
+import { TaskFeedbackService } from '../../services/task-feedback.service';
 
 import { TaskListComponent } from './task-list.component';
 
@@ -21,9 +23,14 @@ describe('TaskListComponent', () => {
   let store: MockStore;
   let dispatch: ReturnType<typeof vi.spyOn>;
   let taskForm: { open: ReturnType<typeof vi.fn> };
+  let feedback: { confirmDelete: ReturnType<typeof vi.fn>; notify: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
     taskForm = { open: vi.fn().mockResolvedValue(undefined) };
+    feedback = {
+      confirmDelete: vi.fn().mockResolvedValue(true),
+      notify: vi.fn().mockResolvedValue(undefined),
+    };
 
     TestBed.configureTestingModule({
       imports: [TaskListComponent],
@@ -32,8 +39,10 @@ describe('TaskListComponent', () => {
         provideTranslateService(),
         provideRouter([]),
         { provide: TaskFormService, useValue: taskForm },
+        { provide: TaskFeedbackService, useValue: feedback },
         provideMockStore({
           selectors: [
+            { selector: selectUse24hClock, value: false },
             { selector: selectVisibleTasks, value: [] },
             { selector: selectTodayTasks, value: [] },
             { selector: selectMonthTaskCount, value: 0 },
@@ -167,9 +176,25 @@ describe('TaskListComponent', () => {
     expect(dispatch).toHaveBeenCalledWith(TaskActions.toggleTask({ id: 'task-1' }));
   });
 
-  it('remove despacha deleteTask', () => {
-    component.remove('task-1');
+  describe('remove', () => {
+    const task = { id: 'task-1', title: 'Comprar café' } as never;
 
-    expect(dispatch).toHaveBeenCalledWith(TaskActions.deleteTask({ id: 'task-1' }));
+    it('pide confirmación antes de borrar', async () => {
+      await component.remove(task);
+
+      expect(feedback.confirmDelete).toHaveBeenCalledWith('Comprar café');
+      expect(dispatch).toHaveBeenCalledWith(TaskActions.deleteTask({ id: 'task-1' }));
+      expect(feedback.notify).toHaveBeenCalledWith('toast.taskDeleted');
+    });
+
+    it('no borra nada si se cancela', async () => {
+      feedback.confirmDelete.mockResolvedValue(false);
+      dispatch.mockClear();
+
+      await component.remove(task);
+
+      expect(dispatch).not.toHaveBeenCalled();
+      expect(feedback.notify).not.toHaveBeenCalled();
+    });
   });
 });

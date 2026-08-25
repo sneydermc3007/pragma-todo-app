@@ -6,8 +6,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 import { TaskActions } from '../../store/task.actions';
 import { TaskFormService } from '../../services/task-form.service';
+import { TaskFeedbackService } from '../../services/task-feedback.service';
 import { selectOverdueTasks, selectUpcomingTasks } from '../../store/task.selectors';
 import { CategoryActions } from '../../../categories/store/category.actions';
+import { selectUse24hClock } from '../../../remote-config/store/remote-config.selectors';
 import { selectCategoryEntities } from '../../../categories/store/category.selectors';
 
 import type { ITask } from '../../models/task.model';
@@ -29,7 +31,10 @@ import { TaskCardComponent } from '../../components/task-card/task-card.componen
 })
 export class TaskAlertsComponent implements OnInit {
   private store = inject(Store);
+
+  readonly use24hClock = this.store.selectSignal(selectUse24hClock);
   private taskForm = inject(TaskFormService);
+  private feedback = inject(TaskFeedbackService);
 
   readonly overdue = this.store.selectSignal(selectOverdueTasks);
   readonly upcoming = this.store.selectSignal(selectUpcomingTasks);
@@ -48,8 +53,11 @@ export class TaskAlertsComponent implements OnInit {
     void this.taskForm.open(task);
   }
 
-  remove(id: string): void {
-    this.store.dispatch(TaskActions.deleteTask({ id }));
+  async remove(task: ITask): Promise<void> {
+    if (!(await this.feedback.confirmDelete(task.title))) return;
+
+    this.store.dispatch(TaskActions.deleteTask({ id: task.id }));
+    await this.feedback.notify('toast.taskDeleted');
   }
 
   toggle(id: string): void {

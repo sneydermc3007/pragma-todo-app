@@ -13,7 +13,8 @@
 
     @for (task of overdue(); track task.id) {
       <app-task-card class="stacked" [task]="task" variant="soft" [showDate]="true"
-                     [category]="categoryOf(task)"
+                     [use24hClock]="use24hClock()"
+            [category]="categoryOf(task)"
                      (toggled)="toggle($event)" (edited)="openForm($event)" (removed)="remove($event)" />
     } @empty {
       <p class="empty">{{ 'alerts.overdueEmpty' | translate }}</p>
@@ -25,7 +26,8 @@
 
     @for (task of upcoming(); track task.id) {
       <app-task-card class="stacked" [task]="task" variant="soft" [showDate]="true"
-                     [category]="categoryOf(task)"
+                     [use24hClock]="use24hClock()"
+            [category]="categoryOf(task)"
                      (toggled)="toggle($event)" (edited)="openForm($event)" (removed)="remove($event)" />
     } @empty {
       <p class="empty">{{ 'alerts.upcomingEmpty' | translate }}</p>

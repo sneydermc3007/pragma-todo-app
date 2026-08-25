@@ -6,7 +6,9 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { TaskActions } from '../../store/task.actions';
 import { selectOverdueTasks, selectUpcomingTasks } from '../../store/task.selectors';
 import { selectCategoryEntities } from '../../../categories/store/category.selectors';
+import { selectUse24hClock } from '../../../remote-config/store/remote-config.selectors';
 import { TaskFormService } from '../../services/task-form.service';
+import { TaskFeedbackService } from '../../services/task-feedback.service';
 
 import { TaskAlertsComponent } from './task-alerts.component';
 
@@ -34,16 +36,23 @@ describe('TaskAlertsComponent', () => {
   let fixture: ComponentFixture<TaskAlertsComponent>;
   let store: MockStore;
   let dispatch: ReturnType<typeof vi.spyOn>;
+  let feedback: { confirmDelete: ReturnType<typeof vi.fn>; notify: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
+    feedback = {
+      confirmDelete: vi.fn().mockResolvedValue(true),
+      notify: vi.fn().mockResolvedValue(undefined),
+    };
     TestBed.configureTestingModule({
       imports: [TaskAlertsComponent],
       providers: [
         provideZonelessChangeDetection(),
         provideTranslateService(),
         { provide: TaskFormService, useValue: { open: vi.fn() } },
+        { provide: TaskFeedbackService, useValue: feedback },
         provideMockStore({
           selectors: [
+            { selector: selectUse24hClock, value: false },
             { selector: selectOverdueTasks, value: [task()] },
             { selector: selectUpcomingTasks, value: [task({ id: 'task-2', scheduledDate: '2099-01-01' })] },
             { selector: selectCategoryEntities, value: {} },

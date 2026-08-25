@@ -37,6 +37,7 @@
             class="timeline__card"
             [task]="task"
             variant="soft"
+            [use24hClock]="use24hClock()"
             [category]="categoryOf(task)"
             (toggled)="toggle($event)"
             (edited)="openForm($event)"

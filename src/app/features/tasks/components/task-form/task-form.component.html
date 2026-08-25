@@ -52,12 +52,42 @@
 
     <div class="times">
       <ion-item>
-        <ion-input [label]="'taskForm.start' | translate" labelPlacement="stacked" type="time" formControlName="startTime" />
+        <ion-label>{{ 'taskForm.start' | translate }}</ion-label>
+        <ion-datetime-button slot="end" datetime="startTimePicker" />
       </ion-item>
       <ion-item>
-        <ion-input [label]="'taskForm.end' | translate" labelPlacement="stacked" type="time" formControlName="endTime" />
+        <ion-label>{{ 'taskForm.end' | translate }}</ion-label>
+        <ion-datetime-button slot="end" datetime="endTimePicker" />
       </ion-item>
     </div>
+
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime
+          id="startTimePicker"
+          presentation="time"
+          [hourCycle]="hourCycle()"
+          [value]="timeValue('startTime')"
+          [showDefaultButtons]="true"
+          [doneText]="'common.save' | translate"
+          [cancelText]="'common.cancel' | translate"
+          (ionChange)="setTime('startTime', $any($event).detail.value)" />
+      </ng-template>
+    </ion-modal>
+
+    <ion-modal [keepContentsMounted]="true">
+      <ng-template>
+        <ion-datetime
+          id="endTimePicker"
+          presentation="time"
+          [hourCycle]="hourCycle()"
+          [value]="timeValue('endTime')"
+          [showDefaultButtons]="true"
+          [doneText]="'common.save' | translate"
+          [cancelText]="'common.cancel' | translate"
+          (ionChange)="setTime('endTime', $any($event).detail.value)" />
+      </ng-template>
+    </ion-modal>
     @if (form.hasError('timeRange')) {
       <ion-note color="danger">{{ 'taskForm.errors.timeRange' | translate }}</ion-note>
     }

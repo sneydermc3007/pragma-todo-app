@@ -5,7 +5,7 @@ import { fetchAndActivate, getBoolean, getRemoteConfig } from 'firebase/remote-c
 import { defer, from, map, Observable, shareReplay, switchMap } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
-import { DEFAULT_FLAGS, FLAG_DARK_MODE } from '../models/remote-config.const';
+import { DEFAULT_FLAGS, FLAG_24H_CLOCK, FLAG_DARK_MODE } from '../models/remote-config.const';
 
 import type { IFeatureFlags } from '../models/remote-config.model';
 
@@ -24,7 +24,12 @@ export class RemoteConfigService {
   getFlags(): Observable<IFeatureFlags> {
     return this.ready$.pipe(
       switchMap((remoteConfig) =>
-        from([{ darkModeEnabled: getBoolean(remoteConfig, FLAG_DARK_MODE) }])
+        from([
+          {
+            darkModeEnabled: getBoolean(remoteConfig, FLAG_DARK_MODE),
+            use24hClock: getBoolean(remoteConfig, FLAG_24H_CLOCK),
+          },
+        ])
       )
     );
   }
