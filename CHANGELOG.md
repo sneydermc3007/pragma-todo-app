@@ -7,6 +7,10 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 ## [Unreleased]
 
+### Added
+
+- README con la descripción del proyecto, cómo instalarlo y correrlo en emulador y en dispositivo físico, la arquitectura, los feature flags configurados, cómo se midió el rendimiento y capturas de cada etapa.
+
 ## [0.8.0] - 2026-08-25
 
 ### Added

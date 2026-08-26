@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  remoteConfigMinimumFetchIntervalMillis: 3600000,
+  remoteConfigMinimumFetchIntervalMillis: 0,
   firebase: {
     apiKey: 'AIzaSyDvr7iOtzUmntTcbtr-YJ9QieLq4XDtNrU',
     authDomain: 'app-to-do-pragma.firebaseapp.com',
