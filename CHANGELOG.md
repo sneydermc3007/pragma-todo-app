@@ -11,6 +11,11 @@ y este proyecto adhiere a [Versionado Semántico](https://semver.org/lang/es/).
 
 - README con la descripción del proyecto, cómo instalarlo y correrlo en emulador y en dispositivo físico, la arquitectura, los feature flags configurados, cómo se midió el rendimiento y capturas de cada etapa.
 
+### Fixed
+
+- En los iPhone con isla dinámica o muesca, la hora y la batería vuelven a verse: la barra de estado se pinta según el tema, oscura sobre claro y clara sobre oscuro.
+- El menú lateral ya no arranca debajo del reloj, y el botón de agregar dejó de quedar pegado al indicador de inicio.
+
 ## [0.8.0] - 2026-08-25
 
 ### Added

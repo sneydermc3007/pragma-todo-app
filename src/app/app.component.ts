@@ -29,7 +29,15 @@ export class AppComponent implements OnInit {
 
   constructor() {
     effect(() => {
-      document.documentElement.classList.toggle('ion-palette-dark', this.darkModeEnabled());
+      const dark = this.darkModeEnabled();
+
+      document.documentElement.classList.toggle('ion-palette-dark', dark);
+
+      if (dark) {
+        window.StatusBar?.styleLightContent();
+      } else {
+        window.StatusBar?.styleDefault();
+      }
     });
   }
 

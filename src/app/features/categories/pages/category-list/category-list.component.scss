@@ -1,5 +1,5 @@
 ion-content {
-  --padding-bottom: var(--app-page-bottom-cta);
+  --padding-bottom: calc(var(--app-page-bottom-cta) + var(--ion-safe-area-bottom, 0px));
 }
 
 .row {
